@@ -23,13 +23,11 @@ public class ProductController {
     public ProductModel saveProduct(@RequestBody ProductModel model){
         return productService.saveProduct(model);
     }
-
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> getAll(@RequestParam (value = "keyword") String search){
+    public List<Product> getAll(@RequestParam (value = "keyword") String search ){
         return productService.getAll(search);
     }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<ProductModel> getOneById(@PathVariable Long id){

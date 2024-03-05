@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -44,28 +45,20 @@ public class ProductServiceImpl implements ProductService {
         Product product = mapper.mapProductModelToProductEntity(model);
         Product saveProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(saveProduct);
-
     }
     @Override
     public List<Product> getAll(String search) {
-        return productRepository.findAll()
-                .stream()
-                .filter(keyword ->
-                        keyword.getShopName().equalsIgnoreCase(search) ||
-                                keyword.getProductName().equalsIgnoreCase(search))
-                .toList();
-
+        return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search);
     }
-
     @Override
     public Optional<ProductModel> getOneById(Long id) {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
-
     @Override
     public void delete(Long id) {
        productRepository.deleteById(id);
     }
+
 
 
 }
