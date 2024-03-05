@@ -8,6 +8,7 @@ import com.springboot.practiceimitateshopeebackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,12 +20,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper;
 
     @Override
-    public ProductModel save(ProductModel model) {
+    public ProductModel saveProduct(ProductModel model) {
 
         boolean isNew = true;
 
         if(!isNew){
-            ProductModel update = this.getById(model.getProductId()).get();
+            ProductModel update = this.getOneById(model.getProductId()).get();
 
             if(model.getShopName() != null){
                 update.setShopName(model.getShopName());
@@ -45,9 +46,26 @@ public class ProductServiceImpl implements ProductService {
         return mapper.mapProductEntityToProductModel(saveProduct);
 
     }
+    @Override
+    public List<Product> getAll(String search) {
+        return productRepository.findAll()
+                .stream()
+                .filter(keyword ->
+                        keyword.getShopName().equalsIgnoreCase(search) ||
+                                keyword.getProductName().equalsIgnoreCase(search))
+                .toList();
+
+    }
 
     @Override
-    public Optional<ProductModel> getById(Long id) {
+    public Optional<ProductModel> getOneById(Long id) {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
+
+    @Override
+    public void delete(Long id) {
+       productRepository.deleteById(id);
+    }
+
+
 }
