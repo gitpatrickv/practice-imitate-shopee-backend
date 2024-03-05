@@ -1,7 +1,9 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.mapper.ProductMapper;
+import com.springboot.practiceimitateshopeebackend.model.Response;
+import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
+import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
@@ -55,10 +57,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
     @Override
-    public void delete(Long id) {
+    public Response delete(Long id) {
        productRepository.deleteById(id);
+       return Response.builder()
+               .responseMessage(StringUtils.DELETED)
+               .build();
     }
-
-
-
 }
