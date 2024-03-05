@@ -1,4 +1,4 @@
-package com.springboot.practiceimitateshopeebackend.mapper;
+package com.springboot.practiceimitateshopeebackend.utils.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.practiceimitateshopeebackend.entity.Product;

@@ -2,9 +2,9 @@ package com.springboot.practiceimitateshopeebackend.controller;
 
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
+import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +23,11 @@ public class ProductController {
     public ProductModel saveProduct(@RequestBody ProductModel model){
         return productService.saveProduct(model);
     }
-
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> getAll(@RequestParam (value = "keyword") String search){
+    public List<Product> getAll(@RequestParam (value = "keyword") String search ){
         return productService.getAll(search);
     }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<ProductModel> getOneById(@PathVariable Long id){
@@ -37,7 +35,7 @@ public class ProductController {
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id){
-        productService.delete(id);
+    public Response delete(@PathVariable Long id){
+        return productService.delete(id);
     }
 }

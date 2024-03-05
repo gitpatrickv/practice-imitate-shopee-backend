@@ -1,4 +1,4 @@
-package com.springboot.practiceimitateshopeebackend.mapper;
+package com.springboot.practiceimitateshopeebackend.utils.mapper;
 
 import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.UserModel;
