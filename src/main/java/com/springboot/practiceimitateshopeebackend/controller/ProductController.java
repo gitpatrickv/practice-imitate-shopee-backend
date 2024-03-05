@@ -25,7 +25,7 @@ public class ProductController {
     }
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> getAll(@RequestParam (value = "keyword") String search ){
+    public List<ProductModel> getAll(@RequestParam (value = "keyword") String search ){
         return productService.getAll(search);
     }
     @GetMapping("/{id}")

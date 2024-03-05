@@ -18,4 +18,7 @@ public class Product {
     private String productName;
     private Double productAmount;
     private Integer quantity;
+
+    @OneToOne
+    private Cart cart;
 }

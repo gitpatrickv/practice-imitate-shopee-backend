@@ -3,6 +3,8 @@ package com.springboot.practiceimitateshopeebackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -20,8 +22,5 @@ public class Cart {
     @OneToOne
     private User user;
     private Double total;
-
-
-
 
 }
