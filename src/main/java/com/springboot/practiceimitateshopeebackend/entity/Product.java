@@ -19,6 +19,8 @@ public class Product {
     private Double productAmount;
     private Integer quantity;
 
+    //@ManyToOne
+    //@JoinColumn(name = "cart_id")       //cascade = CascadeType.ALL ???
     @OneToOne
     private Cart cart;
 }

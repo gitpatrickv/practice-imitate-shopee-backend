@@ -2,6 +2,7 @@ package com.springboot.practiceimitateshopeebackend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,8 @@ public class User implements UserDetails {
     private String contactNumber;
     private String password;
 
+    //@OneToOne
+    //private Cart cart;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

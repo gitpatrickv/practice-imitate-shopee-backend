@@ -5,6 +5,8 @@ import com.springboot.practiceimitateshopeebackend.model.LoginRequest;
 import com.springboot.practiceimitateshopeebackend.model.LoginResponse;
 import com.springboot.practiceimitateshopeebackend.model.UserModel;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
+import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
+import com.springboot.practiceimitateshopeebackend.security.JwtService;
 import com.springboot.practiceimitateshopeebackend.service.UserService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.UserMapper;
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Override
     public UserModel register(UserModel userModel) {
@@ -38,9 +41,10 @@ public class UserServiceImpl implements UserService {
         try{
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
             return LoginResponse.builder()
                     .responseMessage(StringUtils.LOGIN_SUCCESSFUL)
-                    .jwtToken("")
+                    .jwtToken(jwtService.generateToken(authentication))
                     .build();
         }catch (AuthenticationException e){
             throw new BadCredentialsException(StringUtils.INVALID_CREDENTIALS);
