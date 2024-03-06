@@ -12,12 +12,12 @@ import lombok.*;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
     private String shopName;
     private String productName;
     private Double productAmount;
-    private Integer quantity;
+    private Long quantity;
 
     //@ManyToOne
     //@JoinColumn(name = "cart_id")       //cascade = CascadeType.ALL ???

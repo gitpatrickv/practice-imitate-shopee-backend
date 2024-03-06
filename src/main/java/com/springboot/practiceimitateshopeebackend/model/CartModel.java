@@ -15,5 +15,4 @@ public class CartModel {
 
     private ProductModel productModel;
     private UserModel userModel;
-    private Double total;
 }

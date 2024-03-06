@@ -27,8 +27,9 @@ public class User implements UserDetails {
     private String contactNumber;
     private String password;
 
-    //@OneToOne
-    //private Cart cart;
+    @OneToOne
+    private Cart cart;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

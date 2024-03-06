@@ -1,5 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
+import com.springboot.practiceimitateshopeebackend.model.LoginRequest;
+import com.springboot.practiceimitateshopeebackend.model.LoginResponse;
 import com.springboot.practiceimitateshopeebackend.model.UserModel;
 import com.springboot.practiceimitateshopeebackend.service.UserService;
 import com.springboot.practiceimitateshopeebackend.service.impl.UserServiceImpl;
@@ -17,5 +19,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserModel register(@RequestBody UserModel userModel){
         return userService.register(userModel);
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public LoginResponse login(@RequestBody LoginRequest loginRequest){
+        return userService.login(loginRequest);
     }
 }

@@ -14,9 +14,10 @@ import java.util.List;
 @Table(name = "cart")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cartId;
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long cartId;
+    private Long quantity;
+    private Double productAmount;
     //@OneToMany(mappedBy = "cart")
     //private List<Product> product;
 
@@ -24,6 +25,8 @@ public class Cart {
     private Product product;
     @OneToOne
     private User user;
+
+    @Transient
     private Double total;
 
 }

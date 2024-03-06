@@ -14,5 +14,5 @@ public class ProductModel {
     private String shopName;
     private String productName;
     private Double productAmount;
-    private Integer quantity;
+    private Long quantity;
 }
