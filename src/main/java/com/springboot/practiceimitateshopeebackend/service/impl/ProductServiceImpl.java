@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
         return mapper.mapProductEntityToProductModel(saveProduct);
     }
     @Override
-    public List<ProductModel> getAll(String search) {
+    public List<ProductModel> searchProduct(String search) {
         return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search)
                 .stream()
                 .map(mapper::mapProductEntityToProductModel)
@@ -60,10 +60,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
     @Override
-    public Response delete(Long id) {
+    public void delete(Long id) {
        productRepository.deleteById(id);
-       return Response.builder()
-               .responseMessage(StringUtils.DELETED)
-               .build();
     }
 }

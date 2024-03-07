@@ -5,6 +5,7 @@ import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.model.CartRequest;
+import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
@@ -65,6 +66,8 @@ public class CartServiceImpl implements CartService {
                 .map(mapper::mapCartEntityToCartModel)
                 .toList();
     }
+
+
 
     //todo check if the product already exists in the cart
     //todo quantity + -
