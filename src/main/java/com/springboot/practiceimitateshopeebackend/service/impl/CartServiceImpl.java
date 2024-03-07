@@ -9,12 +9,11 @@ import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.CartService;
+import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,20 +29,32 @@ public class CartServiceImpl implements CartService {
         String username = JwtAuthenticationFilter.CURRENT_USER;
         Optional<User> user = userRepository.findById(username);
         Optional<Product> product = productRepository.findById(cartModel.getProductId());
+        Optional<Cart> existingCart = cartRepository.findByProduct_ProductId(cartModel.getProductId());
 
-        if(product.isPresent()){
-            Cart cart = new Cart();
-            cart.setProduct(product.get());
-            cart.setQuantity(cartModel.getQuantity());
-            cart.setProductAmount(product.get().getProductAmount() * cartModel.getQuantity());
-            cart.setShopName(product.get().getShopName());
-            cart.setProductName(product.get().getProductName());
-            cart.setUser(user.get());
-
-            cartRepository.save(cart);
+        try {
+            if (existingCart.isPresent()) {
+                Cart cart = existingCart.get();
+                cart.setQuantity(existingCart.get().getQuantity() + cartModel.getQuantity());
+                cart.setProductAmount(existingCart.get().getQuantity() * product.get().getProductAmount());
+                cartRepository.save(cart);
+            } else {
+                Cart cart = new Cart();
+                cart.setProduct(product.get());
+                cart.setQuantity(cartModel.getQuantity());
+                cart.setProductAmount(product.get().getProductAmount() * cartModel.getQuantity());
+                cart.setShopName(product.get().getShopName());
+                cart.setProductName(product.get().getProductName());
+                cart.setUser(user.get());
+                cartRepository.save(cart);
+            }
         }
-
+        catch (Exception e){
+            throw new NoSuchElementException(StringUtils.OUT_OF_STOCK);
+        }
     }
+
+
+
     //todo check if user is logged in
     //todo check if the product already exists in the cart
     //todo quantity + -

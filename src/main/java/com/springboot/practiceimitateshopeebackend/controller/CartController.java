@@ -1,10 +1,13 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
+import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -18,4 +21,5 @@ public class CartController {
     public void addToCart(@RequestBody CartModel cartModel){
         cartService.addToCart(cartModel);
     }
+
 }
