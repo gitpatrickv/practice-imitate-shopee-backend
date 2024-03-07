@@ -19,8 +19,8 @@ public class CartController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<CartModel> viewMyCart(String email){
-        return cartService.viewMyCart(email);
+    public List<CartModel> cartList(String email){
+        return cartService.cartList(email);
     }
     @GetMapping("/add")
     @ResponseStatus(HttpStatus.OK)

@@ -9,7 +9,7 @@ import java.util.List;
 public interface CartService {
 
     void addToCart(CartRequest cartRequest);
-    List<CartModel> viewMyCart(String email);
+    List<CartModel> cartList(String email);
 
     //List<Cart> getOne(Long id);
 

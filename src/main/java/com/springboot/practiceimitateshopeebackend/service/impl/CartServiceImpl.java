@@ -59,15 +59,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartModel> viewMyCart(String email) {
+    public List<CartModel> cartList(String email) {
         return cartRepository.findAll()
                 .stream()
                 .map(mapper::mapCartEntityToCartModel)
                 .toList();
     }
 
-
-    //todo check if user is logged in
     //todo check if the product already exists in the cart
     //todo quantity + -
     //todo checkout
