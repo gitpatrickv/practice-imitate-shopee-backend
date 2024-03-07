@@ -2,6 +2,7 @@ package com.springboot.practiceimitateshopeebackend.controller;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
+import com.springboot.practiceimitateshopeebackend.model.CartRequest;
 import com.springboot.practiceimitateshopeebackend.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,17 @@ public class CartController {
 
     private final CartService cartService;
 
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<CartModel> viewMyCart(String email){
+        return cartService.viewMyCart(email);
+    }
     @GetMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public void addToCart(@RequestBody CartModel cartModel){
-        cartService.addToCart(cartModel);
+    public void addToCart(@RequestBody CartRequest cartRequest){
+        cartService.addToCart(cartRequest);
     }
+
+
 
 }
