@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
+import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,9 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/add/{id}")
+    @GetMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public void addToCart(@PathVariable(name = "id") Long id){
-        cartService.addToCart(id);
+    public void addToCart(@RequestBody CartModel cartModel){
+        cartService.addToCart(cartModel);
     }
 }

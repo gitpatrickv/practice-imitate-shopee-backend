@@ -3,6 +3,8 @@ package com.springboot.practiceimitateshopeebackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -20,7 +22,8 @@ public class Product {
     private Long quantity;
 
     //@ManyToOne
-    //@JoinColumn(name = "cart_id")       //cascade = CascadeType.ALL ???
-    @OneToOne
-    private Cart cart;
+    //@JoinColumn(name = "cart_id")   //cascade = CascadeType.ALL ???
+    //@OneToOne
+    @OneToMany(mappedBy = "product")
+    private List<Cart> cart;
 }

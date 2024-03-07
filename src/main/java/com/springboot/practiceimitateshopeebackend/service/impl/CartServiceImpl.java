@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,29 +25,28 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     @Override
-    public void addToCart(Long id) {
+    public void addToCart(CartModel cartModel) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
         Optional<User> user = userRepository.findById(username);
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productRepository.findById(cartModel.getProductId());
 
         if(product.isPresent()){
             Cart cart = new Cart();
             cart.setProduct(product.get());
-            cart.setProductAmount(product.get().getProductAmount());
-            cart.setQuantity(1L);
+            cart.setQuantity(cartModel.getQuantity());
+            cart.setProductAmount(product.get().getProductAmount() * cartModel.getQuantity());
+            cart.setShopName(product.get().getShopName());
+            cart.setProductName(product.get().getProductName());
             cart.setUser(user.get());
 
             cartRepository.save(cart);
         }
 
     }
-
-    /*
-
-
-    check if user is login
-    add product to cart
-    create a container for product
-     */
+    //todo check if user is logged in
+    //todo check if the product already exists in the cart
+    //todo quantity + -
+    //todo checkout
+    //todo order details
 }

@@ -18,12 +18,20 @@ public class Cart {
     private Long cartId;
     private Long quantity;
     private Double productAmount;
-    //@OneToMany(mappedBy = "cart")
-    //private List<Product> product;
+    private String shopName;
+    private String productName;
 
-    @OneToOne
+    //@OneToMany(mappedBy = "cart")
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    //@OneToOne
     private Product product;
-    @OneToOne
+
+    //@OneToOne
+    //private Product product;
+    //@OneToMany(mappedBy = "cart")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Transient

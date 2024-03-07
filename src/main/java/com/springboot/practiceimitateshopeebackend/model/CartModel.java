@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartModel {
 
-    private ProductModel productModel;
-    private UserModel userModel;
+   private Long productId;
+   private Long quantity;
+
 }
