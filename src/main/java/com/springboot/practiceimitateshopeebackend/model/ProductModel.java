@@ -13,6 +13,6 @@ public class ProductModel {
     private Long productId;
     private String shopName;
     private String productName;
-    private Double productAmount;
+    private Double price;
     private Long quantity;
 }

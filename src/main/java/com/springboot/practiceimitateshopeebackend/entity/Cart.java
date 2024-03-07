@@ -17,7 +17,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
     private Long quantity;
-    private Double productAmount;
+    private Double price;
+    private Double totalAmount;
     private String shopName;
     private String productName;
 
@@ -34,7 +35,5 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Transient
-    private Double total;
 
 }

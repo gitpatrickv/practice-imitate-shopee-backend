@@ -18,7 +18,7 @@ public class Product {
     private Long productId;
     private String shopName;
     private String productName;
-    private Double productAmount;
+    private Double price;
     private Long quantity;
 
     //@ManyToOne
@@ -26,4 +26,6 @@ public class Product {
     //@OneToOne
     @OneToMany(mappedBy = "product")
     private List<Cart> cart;
+    @Transient
+    private Double totalAmount;
 }

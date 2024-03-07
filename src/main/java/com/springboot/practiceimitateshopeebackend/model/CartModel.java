@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartModel {
     private Long quantity;
-    private Double productAmount;
+    private Double price;
+    private Double totalAmount;
     private String shopName;
     private String productName;
 

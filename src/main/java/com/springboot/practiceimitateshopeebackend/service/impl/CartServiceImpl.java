@@ -39,15 +39,16 @@ public class CartServiceImpl implements CartService {
             if (existingCart.isPresent()) {
                 Cart cart = existingCart.get();
                 cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
-                cart.setProductAmount(existingCart.get().getQuantity() * product.get().getProductAmount());
+                cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                 cartRepository.save(cart);
             } else {
                 Cart cart = new Cart();
                 cart.setProduct(product.get());
                 cart.setQuantity(cartRequest.getQuantity());
-                cart.setProductAmount(product.get().getProductAmount() * cartRequest.getQuantity());
+                cart.setPrice(product.get().getPrice());
                 cart.setShopName(product.get().getShopName());
                 cart.setProductName(product.get().getProductName());
+                cart.setTotalAmount(product.get().getPrice() * cartRequest.getQuantity());
                 cart.setUser(user.get());
                 cartRepository.save(cart);
             }
@@ -61,7 +62,6 @@ public class CartServiceImpl implements CartService {
     public List<CartModel> viewMyCart(String email) {
         return cartRepository.findAll()
                 .stream()
-                //.filter(cart -> cart.getUser().equals(email))
                 .map(mapper::mapCartEntityToCartModel)
                 .toList();
     }

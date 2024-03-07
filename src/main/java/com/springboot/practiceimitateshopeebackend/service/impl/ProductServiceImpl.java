@@ -36,8 +36,8 @@ public class ProductServiceImpl implements ProductService {
             if(model.getProductName() != null){
                 update.setProductName(model.getProductName());
             }
-            if(model.getProductAmount() != null){
-                update.setProductAmount(model.getProductAmount());
+            if(model.getPrice() != null){
+                update.setPrice(model.getPrice());
             }
             if(model.getQuantity() != null){
                 update.setQuantity(model.getQuantity());
