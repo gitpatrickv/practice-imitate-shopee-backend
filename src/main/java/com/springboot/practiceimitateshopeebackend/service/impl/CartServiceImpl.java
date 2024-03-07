@@ -67,6 +67,33 @@ public class CartServiceImpl implements CartService {
                 .toList();
     }
 
+    @Override
+    public void increaseQuantity(Long id) {
+
+        Optional<Product> product = productRepository.findById(id);
+        Optional<Cart> existingCart = cartRepository.findByProduct_ProductId(id);
+
+        if(existingCart.isPresent()){
+            Cart cart = existingCart.get();
+            cart.setQuantity(existingCart.get().getQuantity() + 1);
+            cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+            cartRepository.save(cart);
+        }
+    }
+
+    @Override
+    public void decreaseQuantity(Long id) {
+
+        Optional<Product> product = productRepository.findById(id);
+        Optional<Cart> existingCart = cartRepository.findByProduct_ProductId(id);
+
+        if(existingCart.isPresent()){
+            Cart cart = existingCart.get();
+            cart.setQuantity(existingCart.get().getQuantity() - 1);
+            cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+            cartRepository.save(cart);
+        }
+    }
 
 
     //todo check if the product already exists in the cart

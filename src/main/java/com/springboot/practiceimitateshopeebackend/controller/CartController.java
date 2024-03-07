@@ -22,10 +22,22 @@ public class CartController {
     public List<CartModel> cartList(String email){
         return cartService.cartList(email);
     }
-    @GetMapping("/add")
+    @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
     public void addToCart(@RequestBody CartRequest cartRequest){
         cartService.addToCart(cartRequest);
+    }
+
+    @PutMapping("increase/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void increaseQuantity(@PathVariable Long id) {
+        cartService.increaseQuantity(id);
+    }
+
+    @PutMapping("decrease/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void decreaseQuantity(@PathVariable Long id) {
+        cartService.decreaseQuantity(id);
     }
 
 

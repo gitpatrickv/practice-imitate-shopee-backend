@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
 
+    //@OneToOne
+    //private Order order;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

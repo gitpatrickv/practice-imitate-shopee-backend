@@ -11,8 +11,8 @@ public interface CartService {
 
     void addToCart(CartRequest cartRequest);
     List<CartModel> cartList(String email);
-
-
+    void increaseQuantity(Long id);
+    void decreaseQuantity(Long id);
 
     //List<Cart> getOne(Long id);
 
