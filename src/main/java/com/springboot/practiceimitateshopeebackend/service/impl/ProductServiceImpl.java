@@ -1,12 +1,12 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.model.Response;
-import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
-import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
+import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
+import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
+import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +36,8 @@ public class ProductServiceImpl implements ProductService {
             if(model.getProductName() != null){
                 update.setProductName(model.getProductName());
             }
-            if(model.getProductAmount() != null){
-                update.setProductAmount(model.getProductAmount());
+            if(model.getPrice() != null){
+                update.setPrice(model.getPrice());
             }
             if(model.getQuantity() != null){
                 update.setQuantity(model.getQuantity());
@@ -49,8 +49,11 @@ public class ProductServiceImpl implements ProductService {
         return mapper.mapProductEntityToProductModel(saveProduct);
     }
     @Override
-    public List<Product> getAll(String search) {
-        return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search);
+    public List<ProductModel> getAll(String search) {
+        return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search)
+                .stream()
+                .map(mapper::mapProductEntityToProductModel)
+                .toList();
     }
     @Override
     public Optional<ProductModel> getOneById(Long id) {

@@ -6,15 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserModel{
+public class LoginResponse {
 
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String contactNumber;
-    private String password;
+    private String responseMessage;
+    private String jwtToken;
+
 }

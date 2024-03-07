@@ -1,7 +1,5 @@
 package com.springboot.practiceimitateshopeebackend.model;
 
-import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CartModel {
+    private Long quantity;
+    private Double price;
+    private Double totalAmount;
+    private String shopName;
+    private String productName;
 
-    private Product product;
-    private User user;
-    private Double total;
 }

@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserModel{
+public class CartRequest {
 
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String contactNumber;
-    private String password;
+   private Long productId;
+   private Long quantity;
+
 }
