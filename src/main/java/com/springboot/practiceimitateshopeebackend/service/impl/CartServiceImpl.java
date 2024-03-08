@@ -57,7 +57,7 @@ public class CartServiceImpl implements CartService {
                log.info(StringUtils.OUT_OF_STOCK);
             }else{
                 cart.setProduct(product.get());
-                cart.setQuantity(cartRequest.getQuantity());        //todo: check quantity < request quantity
+                cart.setQuantity(cartRequest.getQuantity());
                 cart.setPrice(product.get().getPrice());
                 cart.setShopName(product.get().getShopName());
                 cart.setProductName(product.get().getProductName());
@@ -80,7 +80,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void increaseQuantity(Long id) {     //todo: set max limit of increase quantity based on products quantity
+    public void increaseQuantity(Long id) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
         Optional<User> user = userRepository.findById(username);
