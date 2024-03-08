@@ -20,13 +20,13 @@ public class AuditEntity {
 
     @CreatedDate
     @Column(
-            nullable = false,        //should not be null
-            updatable=false          //only insertable not updatable
+            nullable = false,
+            updatable=false
     )
     private LocalDateTime createDate;
 
     @LastModifiedDate
-    @Column(insertable = false)       //cannot be inserted, can only be updated
+    @Column(insertable = false)
     private LocalDateTime lastModified;
 
     @CreatedBy
