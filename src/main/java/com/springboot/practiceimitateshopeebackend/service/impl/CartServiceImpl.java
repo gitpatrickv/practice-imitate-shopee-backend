@@ -42,22 +42,30 @@ public class CartServiceImpl implements CartService {
 
         if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
             Cart cart = existingCart.get();
-            cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
-            cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
-            cart.setLastModifiedBy(user.get().getEmail());
-            cartRepository.save(cart);
+            if(cart.getQuantity() < product.get().getQuantity()) {
+                cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
+                cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+                cart.setLastModifiedBy(user.get().getEmail());
+                cartRepository.save(cart);
+            }else{
+                log.info(StringUtils.OUT_OF_STOCK);
+            }
         }
         else {
             Cart cart = new Cart();
-            cart.setProduct(product.get());
-            cart.setQuantity(cartRequest.getQuantity());        //todo: check quantity < request quantity
-            cart.setPrice(product.get().getPrice());
-            cart.setShopName(product.get().getShopName());
-            cart.setProductName(product.get().getProductName());
-            cart.setTotalAmount(product.get().getPrice() * cartRequest.getQuantity());
-            cart.setUser(user.get());
-            cart.setCreatedBy(user.get().getEmail());
-            cartRepository.save(cart);
+            if(cartRequest.getQuantity() > product.get().getQuantity()) {
+               log.info(StringUtils.OUT_OF_STOCK);
+            }else{
+                cart.setProduct(product.get());
+                cart.setQuantity(cartRequest.getQuantity());        //todo: check quantity < request quantity
+                cart.setPrice(product.get().getPrice());
+                cart.setShopName(product.get().getShopName());
+                cart.setProductName(product.get().getProductName());
+                cart.setTotalAmount(product.get().getPrice() * cartRequest.getQuantity());
+                cart.setUser(user.get());
+                cart.setCreatedBy(user.get().getEmail());
+                cartRepository.save(cart);
+            }
         }
     }
 
