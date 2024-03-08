@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;

@@ -1,6 +1,9 @@
 package com.springboot.practiceimitateshopeebackend.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +22,7 @@ public class User implements UserDetails {
 
     @Id
     private String email;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
     private String contactNumber;
     private String password;

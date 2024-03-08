@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel register(UserModel userModel) {
 
+        //todo: check if user already exists in the database
+
         User user = mapper.mapUserModelToUserEntity(userModel);
         User saveUser = userRepository.save(user);
         return mapper.mapUserEntityToUserModel(saveUser);
