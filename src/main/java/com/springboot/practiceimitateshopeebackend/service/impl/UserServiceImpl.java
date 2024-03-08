@@ -10,6 +10,7 @@ import com.springboot.practiceimitateshopeebackend.security.JwtService;
 import com.springboot.practiceimitateshopeebackend.service.UserService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.UserMapper;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel register(UserModel userModel) {
+
+        boolean isEmailExists = userRepository.existsByEmail(userModel.getEmail());
+
+        if(isEmailExists){
+            throw new EntityExistsException(StringUtils.ACCOUNT_EXISTS);
+        }
 
         User user = mapper.mapUserModelToUserEntity(userModel);
         User saveUser = userRepository.save(user);

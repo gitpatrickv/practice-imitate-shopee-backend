@@ -25,17 +25,17 @@ public class ProductController {
     }
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductModel> getAll(@RequestParam (value = "keyword") String search ){
-        return productService.getAll(search);
+    public List<ProductModel> searchProduct(@RequestParam (value = "keyword") String search ){
+        return productService.searchProduct(search);
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<ProductModel> getOneById(@PathVariable Long id){
         return productService.getOneById(id);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response delete(@PathVariable Long id){
-        return productService.delete(id);
+    public void delete(@PathVariable Long id){
+        productService.delete(id);
     }
 }

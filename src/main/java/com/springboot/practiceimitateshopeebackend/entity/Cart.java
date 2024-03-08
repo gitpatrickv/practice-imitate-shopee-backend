@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
@@ -21,6 +21,7 @@ public class Cart {
     private Double totalAmount;
     private String shopName;
     private String productName;
+    private boolean filter;
 
     //@OneToMany(mappedBy = "cart")
     @ManyToOne
@@ -34,6 +35,10 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    //@ManyToOne
+   // @JoinColumn(name = "order_id")
+    //private Order order;
 
 
 }

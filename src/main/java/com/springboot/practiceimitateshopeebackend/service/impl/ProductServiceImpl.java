@@ -43,13 +43,14 @@ public class ProductServiceImpl implements ProductService {
                 update.setQuantity(model.getQuantity());
             }
         }
-
         Product product = mapper.mapProductModelToProductEntity(model);
+        product.setCreatedBy(model.getShopName());
+        product.setLastModifiedBy(model.getShopName());
         Product saveProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(saveProduct);
     }
     @Override
-    public List<ProductModel> getAll(String search) {
+    public List<ProductModel> searchProduct(String search) {
         return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search)
                 .stream()
                 .map(mapper::mapProductEntityToProductModel)
@@ -60,10 +61,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
     @Override
-    public Response delete(Long id) {
+    public void delete(Long id) {
        productRepository.deleteById(id);
-       return Response.builder()
-               .responseMessage(StringUtils.DELETED)
-               .build();
     }
 }
