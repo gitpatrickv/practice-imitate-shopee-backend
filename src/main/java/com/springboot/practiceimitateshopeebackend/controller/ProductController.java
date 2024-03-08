@@ -33,7 +33,7 @@ public class ProductController {
     public Optional<ProductModel> getOneById(@PathVariable Long id){
         return productService.getOneById(id);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id){
         productService.delete(id);
