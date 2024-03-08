@@ -96,8 +96,5 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    //todo check if the product already exists in the cart
-    //todo quantity + -
-    //todo checkout
-    //todo order details
+
 }

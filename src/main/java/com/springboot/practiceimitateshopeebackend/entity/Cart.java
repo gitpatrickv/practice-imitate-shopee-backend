@@ -21,6 +21,7 @@ public class Cart {
     private Double totalAmount;
     private String shopName;
     private String productName;
+    private boolean filter;
 
     //@OneToMany(mappedBy = "cart")
     @ManyToOne
