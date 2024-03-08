@@ -43,8 +43,9 @@ public class ProductServiceImpl implements ProductService {
                 update.setQuantity(model.getQuantity());
             }
         }
-
         Product product = mapper.mapProductModelToProductEntity(model);
+        product.setCreatedBy(model.getShopName());
+        product.setLastModifiedBy(model.getShopName());
         Product saveProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(saveProduct);
     }
