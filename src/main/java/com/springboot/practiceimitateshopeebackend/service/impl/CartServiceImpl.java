@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(cartRequest.getProductId(), cartRequest.getEmail());
 
         if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
-            Cart cart = (Cart) existingCart.get();
+            Cart cart = existingCart.get();
             cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
             cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
             cart.setLastModifiedBy(user.get().getEmail());
@@ -62,9 +62,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartModel> cartList(String email) {
+    public List<CartModel> cartList() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
         return cartRepository.findAll()
                 .stream()
+                .filter(filter -> filter.getCreatedBy().equals(username))
                 .map(mapper::mapCartEntityToCartModel)
                 .toList();
     }
@@ -73,6 +75,7 @@ public class CartServiceImpl implements CartService {
     public void increaseQuantity(Long id) {     //todo: set max limit of increase quantity based on products quantity
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<User> user = userRepository.findById(username);
         Optional<Product> product = productRepository.findById(id);
         Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(id, username);
 
@@ -82,6 +85,7 @@ public class CartServiceImpl implements CartService {
             if(cart.getQuantity() < product.get().getQuantity()){
                 cart.setQuantity(existingCart.get().getQuantity() + 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+                cart.setLastModifiedBy(user.get().getEmail());
                 cartRepository.save(cart);
             }
             else{
@@ -94,6 +98,7 @@ public class CartServiceImpl implements CartService {
     public void decreaseQuantity(Long id) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<User> user = userRepository.findById(username);
         Optional<Product> product = productRepository.findById(id);
         Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(id, username);
 
@@ -103,6 +108,7 @@ public class CartServiceImpl implements CartService {
             if(cart.getQuantity() > 1){
                 cart.setQuantity(existingCart.get().getQuantity() - 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+                cart.setLastModifiedBy(user.get().getEmail());
                 cartRepository.save(cart);
             }else{
                 cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
