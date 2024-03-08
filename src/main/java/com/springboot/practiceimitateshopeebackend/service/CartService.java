@@ -14,7 +14,5 @@ public interface CartService {
     void increaseQuantity(Long id);
     void decreaseQuantity(Long id);
 
-    //List<Cart> getOne(Long id);
-
-    //getCartByUser
+    void delete(Long id);
 }

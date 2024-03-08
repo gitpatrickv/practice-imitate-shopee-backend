@@ -40,6 +40,10 @@ public class CartController {
         cartService.decreaseQuantity(id);
     }
 
-
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id){
+        cartService.delete(id);
+    }
 
 }

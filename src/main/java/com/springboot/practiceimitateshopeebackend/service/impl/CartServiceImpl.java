@@ -13,7 +13,9 @@ import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFil
 import com.springboot.practiceimitateshopeebackend.service.CartService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.CartMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class CartServiceImpl implements CartService {
 
     private final UserRepository userRepository;
@@ -75,16 +79,15 @@ public class CartServiceImpl implements CartService {
         if(existingCart.isPresent()  && existingCart.get().getCreatedBy().equals(username)) {
             Cart cart = existingCart.get();
 
-            if(cart.getQuantity().compareTo(product.get().getQuantity()) >= 0){
-                throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
-
-            }else {
+            if(cart.getQuantity() < product.get().getQuantity()){
                 cart.setQuantity(existingCart.get().getQuantity() + 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                 cartRepository.save(cart);
             }
+            else{
+                log.info(StringUtils.OUT_OF_STOCK);
+            }
         }
-
     }
 
     @Override
@@ -101,10 +104,19 @@ public class CartServiceImpl implements CartService {
                 cart.setQuantity(existingCart.get().getQuantity() - 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                 cartRepository.save(cart);
-
+            }else{
+                cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
             }
         }
     }
+
+    @Override
+    public void delete(Long id) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
+    }
+
+
 }
 
 
