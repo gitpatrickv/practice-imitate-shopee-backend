@@ -77,7 +77,7 @@ public class CartServiceImpl implements CartService {
 
             if(cart.getQuantity().compareTo(product.get().getQuantity()) >= 0){
                 throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
-                //if(existingCart.get().getQuantity().compareTo(product.get().getQuantity()) > 0)){
+
             }else {
                 cart.setQuantity(existingCart.get().getQuantity() + 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
