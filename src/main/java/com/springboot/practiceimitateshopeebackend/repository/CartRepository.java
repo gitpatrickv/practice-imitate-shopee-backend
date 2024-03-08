@@ -14,5 +14,5 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     Optional<Cart> findByProduct_ProductId(Long id);
     Boolean findDuplicateByProduct_ProductId(Long id);
     Optional<Cart> findByProduct_ProductIdAndUserEmail(Long id, String email);
-
+    //Cart deleteByProduct_ProductIdAndUserEmail(Long id, String email);
 }
