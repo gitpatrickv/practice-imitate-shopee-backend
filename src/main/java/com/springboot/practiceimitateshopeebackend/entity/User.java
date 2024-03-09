@@ -5,9 +5,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,13 +30,14 @@ public class User implements UserDetails {
     private String contactNumber;
     private String password;
 
-    //@ManyToOne
-    //@JoinColumn(name = "cart_id")
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
 
-    //@OneToOne
-    //private Order order;
+    @CreationTimestamp
+    private LocalDate createdDate;
+    @UpdateTimestamp
+    private LocalDate lastModified;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

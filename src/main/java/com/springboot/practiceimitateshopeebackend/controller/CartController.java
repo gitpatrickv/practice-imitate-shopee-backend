@@ -19,8 +19,8 @@ public class CartController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<CartModel> cartList(String email){
-        return cartService.cartList(email);
+    public List<CartModel> cartList(){
+        return cartService.cartList();
     }
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
@@ -38,6 +38,12 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public void decreaseQuantity(@PathVariable Long id) {
         cartService.decreaseQuantity(id);
+    }
+
+    @PutMapping("filter/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void filterCart(@PathVariable Long id){
+        cartService.filterCart(id);
     }
 
     @DeleteMapping("/delete/{id}")
