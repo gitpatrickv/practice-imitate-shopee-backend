@@ -27,13 +27,9 @@ public class User implements UserDetails {
     private String contactNumber;
     private String password;
 
-    //@ManyToOne
-    //@JoinColumn(name = "cart_id")
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
 
-    //@OneToOne
-    //private Order order;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

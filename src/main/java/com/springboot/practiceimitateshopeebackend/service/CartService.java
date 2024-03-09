@@ -13,6 +13,6 @@ public interface CartService {
     List<CartModel> cartList();
     void increaseQuantity(Long id);
     void decreaseQuantity(Long id);
-
+    void filterCart(Long id);
     void delete(Long id);
 }

@@ -125,6 +125,24 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void filterCart(Long id) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<User> user = userRepository.findById(username);
+        Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(id, username);
+        Cart cart = existingCart.get();
+
+        if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
+            if(!cart.isFilter()) {
+                cart.setFilter(true);
+                cart.setLastModifiedBy(user.get().getEmail());
+            }else{
+                cart.setFilter(false);
+                cart.setLastModifiedBy(user.get().getEmail());
+            }
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
         cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
