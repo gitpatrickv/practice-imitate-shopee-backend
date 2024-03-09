@@ -36,36 +36,38 @@ public class CartServiceImpl implements CartService {
     public void addToCart(CartRequest cartRequest) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
-        Optional<User> user = userRepository.findById(cartRequest.getEmail());
         Optional<Product> product = productRepository.findById(cartRequest.getProductId());
-        Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(cartRequest.getProductId(), cartRequest.getEmail());
-
-        if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
-            Cart cart = existingCart.get();
-            if(cart.getQuantity() < product.get().getQuantity()) {
-                cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
-                cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
-                cart.setLastModifiedBy(user.get().getEmail());
-                cartRepository.save(cart);
-            }else{
-                log.info(StringUtils.OUT_OF_STOCK);
+        Optional<User> user = userRepository.findById(username);
+        Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(cartRequest.getProductId(), username);
+        try {
+            if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
+                Cart cart = existingCart.get();
+                if (cart.getQuantity() < product.get().getQuantity()) {
+                    cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
+                    cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
+                    cart.setLastModifiedBy(user.get().getEmail());
+                    cartRepository.save(cart);
+                } else {
+                    log.info(StringUtils.OUT_OF_STOCK);
+                }
+            } else {
+                Cart cart = new Cart();
+                if (cartRequest.getQuantity() > product.get().getQuantity()) {
+                    log.info(StringUtils.OUT_OF_STOCK);
+                } else {
+                    cart.setProduct(product.get());
+                    cart.setQuantity(cartRequest.getQuantity());
+                    cart.setPrice(product.get().getPrice());
+                    cart.setShopName(product.get().getShopName());
+                    cart.setProductName(product.get().getProductName());
+                    cart.setTotalAmount(product.get().getPrice() * cartRequest.getQuantity());
+                    cart.setUser(user.get());
+                    cart.setCreatedBy(user.get().getEmail());
+                    cartRepository.save(cart);
+                }
             }
-        }
-        else {
-            Cart cart = new Cart();
-            if(cartRequest.getQuantity() > product.get().getQuantity()) {
-               log.info(StringUtils.OUT_OF_STOCK);
-            }else{
-                cart.setProduct(product.get());
-                cart.setQuantity(cartRequest.getQuantity());
-                cart.setPrice(product.get().getPrice());
-                cart.setShopName(product.get().getShopName());
-                cart.setProductName(product.get().getProductName());
-                cart.setTotalAmount(product.get().getPrice() * cartRequest.getQuantity());
-                cart.setUser(user.get());
-                cart.setCreatedBy(user.get().getEmail());
-                cartRepository.save(cart);
-            }
+        }catch (Exception e){
+            throw new IllegalArgumentException();
         }
     }
 
