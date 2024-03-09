@@ -5,7 +5,6 @@ import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.model.CartRequest;
-import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -82,6 +80,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public List<CartModel> checkout() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        return cartRepository.findAll()
+                .stream()
+                .filter(filter -> filter.getCreatedBy().equals(username) && filter.isFilter())
+                .map(mapper::mapCartEntityToCartModel)
+                .toList();
+    }
+
+
+    @Override
     public void increaseQuantity(Long id) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;
@@ -121,6 +130,7 @@ public class CartServiceImpl implements CartService {
                 cart.setLastModifiedBy(user.get().getEmail());
                 cartRepository.save(cart);
             }else{
+                //todo: confirmation before proceeding to delete the product
                 cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
             }
         }

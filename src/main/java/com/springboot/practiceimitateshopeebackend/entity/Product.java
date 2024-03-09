@@ -21,9 +21,6 @@ public class Product extends AuditEntity{
     private Double price;
     private Long quantity;
 
-    //@ManyToOne
-    //@JoinColumn(name = "cart_id")   //cascade = CascadeType.ALL ???
-    //@OneToOne
     @OneToMany(mappedBy = "product")
     private List<Cart> cart;
     @Transient

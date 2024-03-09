@@ -2,10 +2,8 @@ package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
-import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
-import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
