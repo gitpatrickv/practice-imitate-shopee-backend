@@ -15,10 +15,8 @@ public class PracticeImitateShopeeBackendApplication {
 
 	//todo order details
 	//todo select payment methods
-	//todo mypurchase history make transaction entity
+	//todo mypurchase history
 	//todo kafka to handle all events
-	//todo @Transactional
-	//todo Caching
 	//todo UNIT TEST
 
 
