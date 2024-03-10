@@ -11,10 +11,10 @@ public interface CartService {
 
     void addToCart(CartRequest cartRequest);
     List<CartModel> cartList();
-    public List<CartModel> checkout();
+    List<CartModel> checkout();
     void increaseQuantity(Long id);
     void decreaseQuantity(Long id);
     void filterCart(Long id);
-    void delete(Long id);
+    void deleteProductsInCart(Long id);
 
 }
