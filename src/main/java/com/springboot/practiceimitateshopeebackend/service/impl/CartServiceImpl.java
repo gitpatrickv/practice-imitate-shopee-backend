@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
         Optional<Product> product = productRepository.findById(cartRequest.getProductId());
         Optional<User> user = userRepository.findById(username);
         Optional<Cart> existingCart = cartRepository.findByProduct_ProductIdAndUserEmail(cartRequest.getProductId(), username);
-        try {
+
             if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
                 Cart cart = existingCart.get();
                 if (cart.getQuantity() < product.get().getQuantity()) {
@@ -64,9 +64,6 @@ public class CartServiceImpl implements CartService {
                     cartRepository.save(cart);
                 }
             }
-        }catch (Exception e){
-            throw new IllegalArgumentException();
-        }
     }
 
     @Override
@@ -155,7 +152,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteProductsInCart(Long id) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
         cartRepository.deleteByProduct_ProductIdAndUserEmail(id, username);
     }
