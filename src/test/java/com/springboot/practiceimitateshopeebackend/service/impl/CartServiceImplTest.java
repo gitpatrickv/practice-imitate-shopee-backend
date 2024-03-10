@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.entity.User;
@@ -39,7 +40,7 @@ class CartServiceImplTest {
     }
 
     @Test
-    public void updateExistingCartQuantityTest(){
+    public void updateQuantityIfProductAlreadyExistsInTheCartTest(){
 
         CartRequest cartRequest = new CartRequest();
         cartRequest.setProductId(1L);
@@ -66,10 +67,56 @@ class CartServiceImplTest {
         cartService.addToCart(cartRequest);
 
         Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getQuantity());
-        Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
         Assertions.assertThat(existingCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
         Assertions.assertThat(existingCart.getQuantity()).isEqualTo(4L);
         Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(400);
+        Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
+        Assertions.assertThat(existingCart.getLastModifiedBy()).isEqualTo(user.getEmail());
+    }
+    @Test
+    public void addNewProductToCartIfProductDoesntExistsInTheCart(){
+
+        CartRequest cartRequest = new CartRequest();
+        cartRequest.setProductId(1L);
+        cartRequest.setQuantity(1L);
+
+        User user = new User();
+        user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
+
+        Product product = new Product();
+        product.setPrice(100.0);
+        product.setProductId(1L);
+        product.setQuantity(10L);
+        product.setShopName("SHOP");
+        product.setProductName("PRODUCT NAME");
+
+        Cart newCart = new Cart();
+        newCart.setProduct(product);
+        newCart.setQuantity(cartRequest.getQuantity());
+        newCart.setTotalAmount(product.getPrice() * cartRequest.getQuantity());
+        newCart.setShopName(product.getShopName());
+        newCart.setProductName(product.getProductName());
+        newCart.setUser(user);
+        newCart.setCreatedBy(user.getEmail());
+
+        when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
+        when(productRepository.findById(cartRequest.getProductId())).thenReturn(Optional.of(product));
+
+        cartService.addToCart(cartRequest);
+
+        Assertions.assertThat(newCart.getQuantity()).isLessThan(product.getQuantity());
+        Assertions.assertThat(newCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
+        Assertions.assertThat(newCart.getShopName()).isEqualTo(product.getShopName());
+        Assertions.assertThat(newCart.getProductName()).isEqualTo(product.getProductName());
+        Assertions.assertThat(newCart.getQuantity()).isEqualTo(cartRequest.getQuantity());
+        Assertions.assertThat(newCart.getTotalAmount()).isEqualTo(100);
+        Assertions.assertThat(newCart.getUser()).isEqualTo(user);
+        Assertions.assertThat(newCart.getCreatedBy()).isEqualTo(user.getEmail());
+        Assertions.assertThat(newCart.getLastModifiedBy()).isEqualTo(null);
 
     }
+
+
+
+
 }
