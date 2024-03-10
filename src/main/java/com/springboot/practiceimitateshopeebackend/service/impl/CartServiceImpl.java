@@ -41,6 +41,10 @@ public class CartServiceImpl implements CartService {
             if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
                 Cart cart = existingCart.get();
                 if (cart.getQuantity() < product.get().getQuantity()) {
+                    cart.setProduct(product.get());
+                    cart.setProductName(product.get().getProductName());
+                    cart.setShopName(product.get().getShopName());
+                    cart.setPrice(product.get().getPrice());
                     cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
                     cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                     cart.setLastModifiedBy(user.get().getEmail());
