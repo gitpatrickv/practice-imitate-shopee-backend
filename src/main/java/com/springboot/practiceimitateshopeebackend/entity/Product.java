@@ -3,6 +3,7 @@ package com.springboot.practiceimitateshopeebackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @Builder
@@ -21,8 +22,7 @@ public class Product extends AuditEntity{
     private Double price;
     private Long quantity;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Cart> cart;
-    @Transient
-    private Double totalAmount;
+    
 }
