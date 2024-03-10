@@ -53,8 +53,8 @@ public class CartController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id){
-        cartService.delete(id);
+    public void deleteProductsInCart(@PathVariable Long id){
+        cartService.deleteProductsInCart(id);
     }
 
 }
