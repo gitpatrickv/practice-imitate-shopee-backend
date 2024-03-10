@@ -8,7 +8,6 @@ import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
-import com.springboot.practiceimitateshopeebackend.utils.mapper.CartMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -209,23 +208,16 @@ class CartServiceImplTest {
         cartService.filterCart(id);
 
         Assertions.assertThat(existingCart.isFilter()).isEqualTo(true);
-
     }
 
     @Test
     public void deleteProductsInCart(){
 
         Long id = 1L;
-
         String username = JwtAuthenticationFilter.CURRENT_USER;
-
         cartService.deleteProductsInCart(id);
 
         verify(cartRepository, times(1)).deleteByProduct_ProductIdAndUserEmail(id,username);
 
     }
-
-
-
-
 }
