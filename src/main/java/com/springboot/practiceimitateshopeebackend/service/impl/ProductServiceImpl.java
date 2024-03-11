@@ -5,6 +5,7 @@ import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
+import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import jakarta.transaction.Transactional;
@@ -28,10 +29,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductModel saveProduct(ProductModel model) {
         boolean isNew = !productRepository.existsById(model.getProductId());
         Product product;
+        String username = JwtAuthenticationFilter.CURRENT_USER;
 
         if(isNew) {
             product = mapper.mapProductModelToProductEntity(model);
-            product.setCreatedBy(model.getShopName());
+            product.setCreatedBy(username);
         } else {
             product = productRepository.findById(model.getProductId()).get();
             if (model.getShopName() != null) {
@@ -47,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setQuantity(model.getQuantity());
             }
             updateCart(product);
-            product.setLastModifiedBy(model.getShopName());
+            product.setLastModifiedBy(username);
         }
         Product savedProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(savedProduct);
@@ -61,7 +63,6 @@ public class ProductServiceImpl implements ProductService {
                 cart.setShopName(product.getShopName());
                 cart.setPrice(product.getPrice());
                 cart.setTotalAmount(cart.getQuantity() * product.getPrice());
-                cart.setLastModifiedBy(product.getShopName());
                 cartRepository.save(cart);
             }
         }
