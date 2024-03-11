@@ -5,13 +5,10 @@ import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
-import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,10 +47,8 @@ public class ProductServiceImpl implements ProductService {
                 product.setQuantity(model.getQuantity());
             }
             updateCart(product);
-
             product.setLastModifiedBy(model.getShopName());
         }
-
         Product savedProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(savedProduct);
     }
@@ -65,14 +60,12 @@ public class ProductServiceImpl implements ProductService {
                 cart.setProductName(product.getProductName());
                 cart.setShopName(product.getShopName());
                 cart.setPrice(product.getPrice());
-                cart.setQuantity(product.getQuantity());
+                cart.setTotalAmount(cart.getQuantity() * product.getPrice());
+                cart.setLastModifiedBy(product.getShopName());
                 cartRepository.save(cart);
             }
         }
     }
-
-
-
 
     @Override
     public List<ProductModel> searchProduct(String search) {
