@@ -3,7 +3,6 @@ package com.springboot.practiceimitateshopeebackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Builder
