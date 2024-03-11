@@ -9,7 +9,9 @@ import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFil
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,45 +19,60 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
-
     private final ProductMapper mapper;
 
     @Override
     public ProductModel saveProduct(ProductModel model) {
+        boolean isNew = !productRepository.existsById(model.getProductId());
+        Product product;
 
-        boolean isNew = true;
+        if(isNew) {
+            product = mapper.mapProductModelToProductEntity(model);
+            product.setCreatedBy(model.getShopName());
+        } else {
+            product = productRepository.findById(model.getProductId()).get();
+            if (model.getShopName() != null) {
+                product.setShopName(model.getShopName());
+            }
+            if (model.getProductName() != null) {
+                product.setProductName(model.getProductName());
+            }
+            if (model.getPrice() != null) {
+                product.setPrice(model.getPrice());
+            }
+            if (model.getQuantity() != null) {
+                product.setQuantity(model.getQuantity());
+            }
+            updateCart(product);
 
-        if(!isNew){
-            Product update = productRepository.findById(model.getProductId()).get();
-
-            if(model.getShopName() != null){
-                update.setShopName(model.getShopName());
-            }
-            if(model.getProductName() != null){
-                update.setProductName(model.getProductName());
-            }
-            if(model.getPrice() != null){
-                update.setPrice(model.getPrice());
-            }
-            if(model.getQuantity() != null){
-                update.setQuantity(model.getQuantity());
-            }
-            productRepository.save(update);
+            product.setLastModifiedBy(model.getShopName());
         }
 
-        Product product = mapper.mapProductModelToProductEntity(model);
-        product.setCreatedBy(model.getShopName());
-        product.setLastModifiedBy(model.getShopName());
-
-        Product saveProduct = productRepository.save(product);
-        return mapper.mapProductEntityToProductModel(saveProduct);
+        Product savedProduct = productRepository.save(product);
+        return mapper.mapProductEntityToProductModel(savedProduct);
     }
+
+    private void updateCart(Product product) {
+        List<Cart> carts = product.getCart();
+        if (carts != null) {
+            for (Cart cart : carts) {
+                cart.setProductName(product.getProductName());
+                cart.setShopName(product.getShopName());
+                cart.setPrice(product.getPrice());
+                cart.setQuantity(product.getQuantity());
+                cartRepository.save(cart);
+            }
+        }
+    }
+
+
+
 
     @Override
     public List<ProductModel> searchProduct(String search) {
