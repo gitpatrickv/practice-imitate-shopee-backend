@@ -62,14 +62,14 @@ public class OrderServiceImpl implements OrderService {
                         .orderStatus("PROCESSING")
                         .build();
 
-                this.order(orderModel);
+                this.orderDetails(orderModel);
             //}
         }
 
         cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username,username);
     }
 
-    private void order(OrderModel orderModel) {
+    private void orderDetails(OrderModel orderModel) {
 
         Order order = Order.builder()
                 .name(orderModel.getName())
