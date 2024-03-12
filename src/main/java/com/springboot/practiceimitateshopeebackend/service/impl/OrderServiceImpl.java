@@ -10,6 +10,7 @@ import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.OrderService;
+import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.CartMapper;
 import com.springboot.practiceimitateshopeebackend.utils.mapper.OrderMapper;
 import jakarta.transaction.Transactional;
@@ -31,6 +32,45 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CartMapper mapper;
 
+    @Override
+    public void placeOrder() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+
+        List<CartModel> cartModel = new ArrayList<>();
+        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
+
+        for (Cart carts : cart) {
+            cartModel.add(mapper.mapCartEntityToCartModel(carts));
+            this.orderDetails(carts);
+        }
+
+        cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
+    }
+
+    public void orderDetails(Cart cart){
+
+        Order order = new Order();
+        order.setName(cart.getUser().getName());
+        order.setAddress(cart.getUser().getAddress());
+        order.setEmail(cart.getUser().getEmail());
+        order.setContactNumber(cart.getUser().getContactNumber());
+        order.setPrice(cart.getPrice());
+        order.setTotalAmount(cart.getTotalAmount());
+        order.setShopName(cart.getShopName());
+        order.setProductName(cart.getProductName());
+        order.setQuantity(cart.getQuantity());
+        order.setProductId(cart.getProduct().getProductId());
+        //order.setUserId(cart.getUser().getEmail());
+        order.setCreatedBy(cart.getCreatedBy());
+        order.setPaymentMethod(StringUtils.CASH_ON_DELIVERY);
+        order.setOrderStatus(StringUtils.PROCESSING);
+        order.setCreatedBy(cart.getCreatedBy());
+
+        orderRepository.save(order);
+
+    }
+
+/*
     @Override
     public void placeOrder() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
@@ -58,8 +98,8 @@ public class OrderServiceImpl implements OrderService {
                         .productId(carts.getProduct().getProductId())
                         .userId(carts.getUser().getEmail())
 
-                        .paymentMethod("CASH ON DELIVERY")
-                        .orderStatus("PROCESSING")
+                        .paymentMethod(StringUtils.CASH_ON_DELIVERY)
+                        .orderStatus(StringUtils.PROCESSING)
                         .build();
 
                 this.orderDetails(orderModel);
@@ -93,4 +133,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
     }
+
+ */
 }

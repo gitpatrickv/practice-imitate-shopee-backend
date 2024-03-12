@@ -2,7 +2,9 @@ package com.springboot.practiceimitateshopeebackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Builder
@@ -12,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends AuditEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +32,11 @@ public class Order {
     private Long quantity;
 
     private Long productId;
-    private String userId;
+    //private String userId;
 
     private String paymentMethod;
     private String orderStatus;
+
 
     //@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
    // private List<Cart> cart;
