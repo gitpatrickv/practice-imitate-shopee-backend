@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
     }
 
-    public void orderDetails(Cart cart){
+    private void orderDetails(Cart cart){
 
         Order order = new Order();
         order.setName(cart.getUser().getName());
@@ -60,7 +60,6 @@ public class OrderServiceImpl implements OrderService {
         order.setProductName(cart.getProductName());
         order.setQuantity(cart.getQuantity());
         order.setProductId(cart.getProduct().getProductId());
-        //order.setUserId(cart.getUser().getEmail());
         order.setCreatedBy(cart.getCreatedBy());
         order.setPaymentMethod(StringUtils.CASH_ON_DELIVERY);
         order.setOrderStatus(StringUtils.PROCESSING);
@@ -70,69 +69,4 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-/*
-    @Override
-    public void placeOrder() {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
-
-        List<CartModel> cartModel = new ArrayList<>();
-        //List<Cart> cart = cartRepository.findAll();
-        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
-
-        for (Cart carts : cart) {
-           // if (carts.getCreatedBy().equals(username) && carts.isFilter()) {
-                cartModel.add(mapper.mapCartEntityToCartModel(carts));
-
-                OrderModel orderModel = OrderModel.builder()
-                        .name(carts.getUser().getName())
-                        .address(carts.getUser().getAddress())
-                        .email(carts.getUser().getEmail())
-                        .contactNumber(carts.getUser().getContactNumber())
-
-                        .price(carts.getPrice())
-                        .totalAmount(carts.getTotalAmount())
-                        .shopName(carts.getShopName())
-                        .productName(carts.getProductName())
-                        .quantity(carts.getQuantity())
-
-                        .productId(carts.getProduct().getProductId())
-                        .userId(carts.getUser().getEmail())
-
-                        .paymentMethod(StringUtils.CASH_ON_DELIVERY)
-                        .orderStatus(StringUtils.PROCESSING)
-                        .build();
-
-                this.orderDetails(orderModel);
-            //}
-        }
-
-        cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username,username);
-    }
-
-    private void orderDetails(OrderModel orderModel) {
-
-        Order order = Order.builder()
-                .name(orderModel.getName())
-                .address(orderModel.getAddress())
-                .email(orderModel.getEmail())
-                .contactNumber(orderModel.getContactNumber())
-
-                .price(orderModel.getPrice())
-                .totalAmount(orderModel.getTotalAmount())
-                .shopName(orderModel.getShopName())
-                .productName(orderModel.getProductName())
-                .quantity(orderModel.getQuantity())
-
-                .productId(orderModel.getProductId())
-                .userId(orderModel.getUserId())
-
-                .paymentMethod(orderModel.getPaymentMethod())
-                .orderStatus(orderModel.getOrderStatus())
-
-                .build();
-
-        orderRepository.save(order);
-    }
-
- */
 }
