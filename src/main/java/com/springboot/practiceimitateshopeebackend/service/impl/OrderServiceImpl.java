@@ -28,12 +28,8 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final CartRepository cartRepository;
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
     private final CartMapper mapper;
-    private final CartServiceImpl cartService;
 
     @Override
     public void placeOrder() {
@@ -96,8 +92,5 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderRepository.save(order);
-
     }
-
-
 }
