@@ -144,13 +144,8 @@ public class CartServiceImpl implements CartService {
         Cart cart = existingCart.get();
 
         if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
-            if(!cart.isFilter()) {
-                cart.setFilter(true);
-                cart.setLastModifiedBy(user.get().getEmail());
-            }else{
-                cart.setFilter(false);
-                cart.setLastModifiedBy(user.get().getEmail());
-            }
+            cart.setFilter(!cart.isFilter());
+            cart.setLastModifiedBy(user.get().getEmail());
         }
     }
 
