@@ -22,6 +22,11 @@ public class CartController {
     public List<CartModel> cartList(){
         return cartService.cartList();
     }
+    @GetMapping("/checkout")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CartModel> checkout(){
+        return cartService.checkout();
+    }
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
     public void addToCart(@RequestBody CartRequest cartRequest){
@@ -48,8 +53,8 @@ public class CartController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id){
-        cartService.delete(id);
+    public void deleteProductsInCart(@PathVariable Long id){
+        cartService.deleteProductsInCart(id);
     }
 
 }

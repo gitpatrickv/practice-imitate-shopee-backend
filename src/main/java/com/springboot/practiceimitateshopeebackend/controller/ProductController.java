@@ -18,7 +18,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PutMapping("/save")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.OK)
     public ProductModel saveProduct(@RequestBody ProductModel model){
         return productService.saveProduct(model);

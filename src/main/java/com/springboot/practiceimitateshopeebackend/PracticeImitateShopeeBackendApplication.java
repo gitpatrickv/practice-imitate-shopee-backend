@@ -12,11 +12,13 @@ public class PracticeImitateShopeeBackendApplication {
 		SpringApplication.run(PracticeImitateShopeeBackendApplication.class, args);
 	}
 
-	//todo checkout
-	//todo order details
-	//todo filter products that is included on checkout
-	//todo find similar
+
+	//todo place order
 	//todo select payment methods
 	//todo mypurchase history
+	//todo kafka to handle all events
+	//todo validation
+	//todo UNIT TEST
+
 
 }

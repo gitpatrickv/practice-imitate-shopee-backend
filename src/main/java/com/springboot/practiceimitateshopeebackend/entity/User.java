@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
 
+    //@OneToMany(mappedBy = "user")
+    //private List<Order> order;
+
     @CreationTimestamp
     private LocalDate createdDate;
     @UpdateTimestamp

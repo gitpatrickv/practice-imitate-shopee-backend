@@ -11,5 +11,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(String search1, String search2);
 
-
 }
