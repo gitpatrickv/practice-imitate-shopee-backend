@@ -11,7 +11,6 @@ public interface CartService {
 
     void addToCart(CartRequest cartRequest);
     List<CartModel> cartList();
-    List<CartModel> checkout();
     void increaseQuantity(Long id);
     void decreaseQuantity(Long id);
     void filterCart(Long id);

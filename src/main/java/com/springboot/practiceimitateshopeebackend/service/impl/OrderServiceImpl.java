@@ -33,6 +33,16 @@ public class OrderServiceImpl implements OrderService {
     private final CartMapper mapper;
 
     @Override
+    public List<CartModel> checkout() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        return cartRepository.findAll()
+                .stream()
+                .filter(filter -> filter.getCreatedBy().equals(username) && filter.isFilter())
+                .map(mapper::mapCartEntityToCartModel)
+                .toList();
+    }
+
+    @Override
     public void placeOrder() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 

@@ -8,6 +8,7 @@ import java.util.List;
 public interface OrderService {
 
     void placeOrder();
+    List<CartModel> checkout();
 
-    //void order(OrderModel orderModel);
+
 }

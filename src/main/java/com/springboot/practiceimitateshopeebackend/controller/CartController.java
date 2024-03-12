@@ -22,11 +22,6 @@ public class CartController {
     public List<CartModel> cartList(){
         return cartService.cartList();
     }
-    @GetMapping("/checkout")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CartModel> checkout(){
-        return cartService.checkout();
-    }
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
     public void addToCart(@RequestBody CartRequest cartRequest){
