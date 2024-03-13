@@ -53,8 +53,11 @@ public class AccountServiceImpl implements AccountService {
 
         userRepository.save(user);
 
-        return request;
+        return UpdateUserRequest.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .address(user.getAddress())
+                .contactNumber(user.getContactNumber())
+                .build();
     }
-
-
 }
