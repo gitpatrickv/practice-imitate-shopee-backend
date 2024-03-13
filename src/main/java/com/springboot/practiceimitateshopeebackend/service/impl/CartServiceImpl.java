@@ -80,17 +80,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartModel> checkout() {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
-        return cartRepository.findAll()
-                .stream()
-                .filter(filter -> filter.getCreatedBy().equals(username) && filter.isFilter())
-                .map(mapper::mapCartEntityToCartModel)
-                .toList();
-    }
-
-
-    @Override
     public void increaseQuantity(Long id) {
 
         String username = JwtAuthenticationFilter.CURRENT_USER;

@@ -4,6 +4,7 @@ import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.model.CartRequest;
 import com.springboot.practiceimitateshopeebackend.service.CartService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +23,9 @@ public class CartController {
     public List<CartModel> cartList(){
         return cartService.cartList();
     }
-    @GetMapping("/checkout")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CartModel> checkout(){
-        return cartService.checkout();
-    }
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
-    public void addToCart(@RequestBody CartRequest cartRequest){
+    public void addToCart(@RequestBody @Valid CartRequest cartRequest){
         cartService.addToCart(cartRequest);
     }
 

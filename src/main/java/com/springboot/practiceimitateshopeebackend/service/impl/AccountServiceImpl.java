@@ -2,7 +2,6 @@ package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.ChangePasswordRequest;
-import com.springboot.practiceimitateshopeebackend.model.UserModel;
 import com.springboot.practiceimitateshopeebackend.model.UpdateUserRequest;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.service.AccountService;
@@ -32,10 +31,10 @@ public class AccountServiceImpl implements AccountService {
         if(!passwordEncoder.matches(request.getOldPassword(), newPassword.getPassword())){
             throw new BadCredentialsException(StringUtils.WRONG_PASSWORD);
         }
-        if(!request.getPassword().matches(request.getConfirmPassword())){
+        if(!request.getNewPassword().matches(request.getConfirmPassword())){
             throw new BadCredentialsException(StringUtils.PASSWORD_NOT_MATCH);
         }
-        newPassword.setPassword(passwordEncoder.encode(request.getPassword()));
+        newPassword.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(newPassword);
 
     }
@@ -55,11 +54,10 @@ public class AccountServiceImpl implements AccountService {
         userRepository.save(user);
 
         return UpdateUserRequest.builder()
+                .email(user.getEmail())
                 .name(user.getName())
                 .address(user.getAddress())
                 .contactNumber(user.getContactNumber())
                 .build();
     }
-
-
 }

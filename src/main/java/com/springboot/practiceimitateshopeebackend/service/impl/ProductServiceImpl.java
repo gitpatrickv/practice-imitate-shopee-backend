@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @AllArgsConstructor
 @Transactional
@@ -48,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
             if (model.getQuantity() != null) {
                 product.setQuantity(model.getQuantity());
             }
-            updateCart(product);
+            this.updateCart(product);
             product.setLastModifiedBy(username);
         }
         Product savedProduct = productRepository.save(product);

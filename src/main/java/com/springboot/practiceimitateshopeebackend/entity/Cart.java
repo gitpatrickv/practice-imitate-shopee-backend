@@ -31,9 +31,7 @@ public class Cart extends AuditEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
-    //@ManyToMany(mappedBy = "cart")
-    //private List<Order> order;
-
-
+    @ManyToMany(mappedBy = "cart")
+    private List<Order> order;
 
 }
