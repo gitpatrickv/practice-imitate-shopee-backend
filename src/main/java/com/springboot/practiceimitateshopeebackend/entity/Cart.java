@@ -34,12 +34,4 @@ public class Cart extends AuditEntity{
     @ManyToMany(mappedBy = "cart")
     private List<Order> order;
 
-    //@ManyToOne
-    //@JoinColumn(name = "order_id")
-    //private Order order;
-
-
-
-
-
 }
