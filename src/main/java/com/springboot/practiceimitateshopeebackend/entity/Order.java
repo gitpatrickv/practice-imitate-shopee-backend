@@ -32,26 +32,9 @@ public class Order extends AuditEntity{
     private Long quantity;
 
     private Long productId;
-    //private String userId;
 
     private String paymentMethod;
     private String orderStatus;
-
-
-    //@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-   // private List<Cart> cart;
-/*
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart Cart;
- */
-
-
-    //@ManyToOne
-    //@JoinColumn(name = "user_id")
-    //private User user;
-
-    //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 
     @ManyToMany
     @JoinTable(name = "order_list",
