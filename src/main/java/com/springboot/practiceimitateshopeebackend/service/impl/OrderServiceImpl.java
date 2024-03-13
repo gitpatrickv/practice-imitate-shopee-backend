@@ -79,4 +79,12 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public void cancelOrder() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        orderRepository.deleteAllByEmail(username);
+    }
+
+
+
 }
