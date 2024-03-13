@@ -6,6 +6,7 @@ import com.springboot.practiceimitateshopeebackend.validation.UniqueEmailValid;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,10 +21,15 @@ public class UserModel{
     @Valid
 
     @UniqueEmailValid
+    @NotBlank(message = "{email.required}")
     private String email;
+    @NotBlank(message = "{name.required}")
     private String name;
+    @NotBlank(message = "{address.required}")
     private String address;
+    @NotBlank(message = "{phone.number.required}")
     private String contactNumber;
+    @NotBlank(message = "{password.required}")
     private String password;
     @Enumerated(EnumType.STRING)
     private Gender gender;
