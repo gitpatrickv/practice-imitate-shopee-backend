@@ -15,10 +15,14 @@ public class PracticeImitateShopeeBackendApplication {
 
 	//todo place order
 	//todo select payment methods
-	//todo mypurchase history
 	//todo kafka to handle all events
 	//todo validation
 	//todo UNIT TEST
 
+	//todo show all my purchase history
+	//todo show all completed orders
+	//todo show all cancelled orders
+	//todo cancel order
+	//todo buy again
 
 }

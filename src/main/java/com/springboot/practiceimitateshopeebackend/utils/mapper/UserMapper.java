@@ -17,9 +17,9 @@ public class UserMapper {
 
     public UserModel mapUserEntityToUserModel(User user){
 
-       UserModel userModel = mapper.map(user, UserModel.class);
-       userModel.setPassword(passwordEncoder.encode(user.getPassword()));
-       return userModel;
+        UserModel userModel = mapper.map(user, UserModel.class);
+        userModel.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userModel;
     }
 
     public User mapUserModelToUserEntity(UserModel userModel){

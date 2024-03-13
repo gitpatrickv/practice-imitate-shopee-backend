@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.entity;
 
+import com.springboot.practiceimitateshopeebackend.entity.constants.Gender;
 import com.springboot.practiceimitateshopeebackend.entity.constants.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,25 +30,21 @@ public class User implements UserDetails {
     private String contactNumber;
     private String password;
     @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
-
-    //@OneToMany(mappedBy = "user")
-    //private List<Order> order;
 
     @CreationTimestamp
     private LocalDate createdDate;
     @UpdateTimestamp
     private LocalDate lastModified;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
     @Override
     public String getUsername() {
         return email;
