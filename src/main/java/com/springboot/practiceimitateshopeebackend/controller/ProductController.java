@@ -1,15 +1,10 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
-import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
-import com.springboot.practiceimitateshopeebackend.model.Response;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
-import com.springboot.practiceimitateshopeebackend.validation.marker.OnCreate;
-import com.springboot.practiceimitateshopeebackend.validation.marker.OnUpdate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
