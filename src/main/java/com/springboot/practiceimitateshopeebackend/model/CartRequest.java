@@ -13,6 +13,5 @@ public class CartRequest {
 
    private Long productId;
    private Long quantity;
-   //private String email;
 
 }
