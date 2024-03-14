@@ -23,5 +23,7 @@ public class Product extends AuditEntity{
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Cart> cart;
+
+    //@ManyToOne
     
 }

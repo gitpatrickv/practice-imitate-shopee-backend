@@ -30,9 +30,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getAllCompletedOrders() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
-        return transactionRepository.findAll().stream().filter(filter ->
-                filter.getCreatedBy().equals(username) &&
-                        filter.getOrderStatus().equals("DELIVERED"))
+        return transactionRepository.findAll().stream()
+                .filter(filter ->
+                        filter.getCreatedBy().equals(username) &&
+                                filter.getOrderStatus().equals("DELIVERED"))
                 .toList();
     }
 
