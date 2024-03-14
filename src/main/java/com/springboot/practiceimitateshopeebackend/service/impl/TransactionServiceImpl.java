@@ -14,8 +14,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-
-        protected void saveCancelledTransaction(Order order){
+        public void saveCancelledTransaction(Order order){
 
         Transaction transaction = new Transaction();
         transaction.setProductName(order.getProductName());
