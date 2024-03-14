@@ -3,10 +3,13 @@ package com.springboot.practiceimitateshopeebackend.service.impl;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
 import com.springboot.practiceimitateshopeebackend.entity.Transaction;
 import com.springboot.practiceimitateshopeebackend.repository.TransactionRepository;
+import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.TransactionService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,4 +32,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
 
+    @Override
+    public List<Transaction> getAllCancelledOrders() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        return transactionRepository.findAll().stream()
+                .filter(filter ->
+                        filter.getCreatedBy().equals(username) &&
+                                filter.getOrderStatus().equals("CANCELLED"))
+                .toList();
+    }
 }
