@@ -25,4 +25,12 @@ public class PracticeImitateShopeeBackendApplication {
 	//todo cancel order
 	//todo buy again
 
+	//todo flyway practice
+
+	//todo generate random order id
+	//todo payment method
+	//todo order status = COMPLETED CANCELLED PENDING PROCESSING, OUT FOR DELIVERY make a method for changing order status?
+	//todo transaction history different from order? when order is cancelled / completed it will go to transaction history db then be deleted in the order db?
+	//todo kafka to handle all events
+
 }

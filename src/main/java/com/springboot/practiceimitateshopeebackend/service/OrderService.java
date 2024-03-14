@@ -10,7 +10,7 @@ public interface OrderService {
 
     void placeOrder();
     List<CartModel> checkout();
-    void cancelOrder();
+    void cancelOrder(String shopName);
 
 
 }

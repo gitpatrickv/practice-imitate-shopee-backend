@@ -28,10 +28,10 @@ public class OrderController {
     public List<CartModel> checkout(){
         return orderService.checkout();
     }
-    @DeleteMapping("/delete")
+    @GetMapping("/cancel/{store}")
     @ResponseStatus(HttpStatus.OK)
-    public void cancelOrder(){
-        orderService.cancelOrder();
+    public void cancelOrder(@PathVariable("store") String shopName){
+        orderService.cancelOrder(shopName);
     }
 
 

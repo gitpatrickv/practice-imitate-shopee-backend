@@ -13,5 +13,6 @@ public class StringUtils {
     public static final String PROCESSING = "PROCESSING";
     public static final String ADMIN_CREATED = "ADMIN USER CREATED SUCCESSFULLY!";
     public static final String ADMIN_ALREADY_EXISTS = "ADMIN USER ALREADY EXISTS!";
+    public static final String ORDER_CANCELLED = "CANCELLED";
 
 }
