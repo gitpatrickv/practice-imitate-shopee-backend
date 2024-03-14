@@ -30,7 +30,7 @@ public class UserConfig {
                 user.setName("ADMIN");
                 user.setEmail("admin@gmail.com");
                 user.setPassword(passwordEncoder.encode("admin"));
-                user.setRole(Role.valueOf("ADMIN"));
+                user.setRole(Role.ADMIN);
                 userRepository.save(user);
                 log.info(StringUtils.ADMIN_CREATED);
             }
