@@ -21,8 +21,8 @@ public class PracticeImitateShopeeBackendApplication {
 
 	//todo show all my purchase history
 	//todo show all completed orders
-	//todo show all cancelled orders
-	//todo cancel order
+
+
 	//todo buy again
 
 	//todo flyway practice

@@ -24,4 +24,10 @@ public class TransactionController {
     public List<Transaction> getAllCancelledOrders(){
         return transactionService.getAllCancelledOrders();
     }
+
+    @GetMapping("/completeOrder")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Transaction> getAllCompletedOrders(){
+        return transactionService.getAllCompletedOrders();
+    }
 }

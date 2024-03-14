@@ -82,14 +82,24 @@ public class OrderServiceImpl implements OrderService {
 
         for (Order orders : order) {
             orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
-            transactionService.saveCancelledTransaction(orders);
+            transactionService.saveCancelledOrder(orders);
         }
         orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
 
+    @Override
+    public void completeOrder(String shopName) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
 
+        List<OrderModel> orderList = new ArrayList<>();
+        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
 
-
+        for (Order orders : order) {
+            orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
+            transactionService.saveCompletedOrder(orders);
+        }
+        orderRepository.deleteAllByEmailAndShopName(username, shopName);
+    }
 
 
 }

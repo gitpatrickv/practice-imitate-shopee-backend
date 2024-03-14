@@ -17,7 +17,27 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-        public void saveCancelledTransaction(Order order){
+    @Override
+    public List<Transaction> getAllCancelledOrders() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        return transactionRepository.findAll().stream()
+                .filter(filter ->
+                        filter.getCreatedBy().equals(username) &&
+                                filter.getOrderStatus().equals("CANCELLED"))
+                .toList();
+    }
+
+    @Override
+    public List<Transaction> getAllCompletedOrders() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        return transactionRepository.findAll().stream().filter(filter ->
+                filter.getCreatedBy().equals(username) &&
+                        filter.getOrderStatus().equals("DELIVERED"))
+                .toList();
+    }
+
+
+    public void saveCancelledOrder(Order order){
 
         Transaction transaction = new Transaction();
         transaction.setProductName(order.getProductName());
@@ -31,14 +51,17 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.save(transaction);
     }
 
+    public void saveCompletedOrder(Order order){
 
-    @Override
-    public List<Transaction> getAllCancelledOrders() {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
-        return transactionRepository.findAll().stream()
-                .filter(filter ->
-                        filter.getCreatedBy().equals(username) &&
-                                filter.getOrderStatus().equals("CANCELLED"))
-                .toList();
+        Transaction transaction = new Transaction();
+        transaction.setProductName(order.getProductName());
+        transaction.setShopName(order.getShopName());
+        transaction.setPrice(order.getPrice());
+        transaction.setTotalAmount(order.getTotalAmount());
+        transaction.setQuantity(order.getQuantity());
+        transaction.setOrderStatus(StringUtils.ORDER_DELIVERED);
+        transaction.setCreatedBy(order.getCreatedBy());
+
+        transactionRepository.save(transaction);
     }
 }
