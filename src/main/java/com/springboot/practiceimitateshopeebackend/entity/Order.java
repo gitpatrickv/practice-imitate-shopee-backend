@@ -36,22 +36,4 @@ public class Order extends AuditEntity{
     private String paymentMethod;
     private String orderStatus;
 
-    @ManyToMany
-    @JoinTable(name = "order_list",
-            joinColumns = {
-            @JoinColumn(name = "order_id")
-            },
-            inverseJoinColumns = {
-            @JoinColumn(name = "cart_id")
-    })
-    private List<Cart> cart;
-
-
-
-
-
-
-
-
-
 }
