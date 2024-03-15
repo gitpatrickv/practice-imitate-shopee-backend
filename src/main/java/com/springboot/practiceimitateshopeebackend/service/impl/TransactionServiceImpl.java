@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
+import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
 import com.springboot.practiceimitateshopeebackend.entity.Transaction;
 import com.springboot.practiceimitateshopeebackend.repository.TransactionRepository;
@@ -30,9 +31,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getAllCompletedOrders() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
-        return transactionRepository.findAll().stream().filter(filter ->
-                filter.getCreatedBy().equals(username) &&
-                        filter.getOrderStatus().equals("DELIVERED"))
+        return transactionRepository.findAll().stream()
+                .filter(filter ->
+                        filter.getCreatedBy().equals(username) &&
+                                filter.getOrderStatus().equals("DELIVERED"))
                 .toList();
     }
 
@@ -44,6 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
+        transaction.setProductId(order.getProductId());
         transaction.setOrderStatus(StringUtils.ORDER_CANCELLED);
         transaction.setCreatedBy(order.getCreatedBy());
 
@@ -58,9 +61,12 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
+        transaction.setProductId(order.getProductId());
         transaction.setOrderStatus(StringUtils.ORDER_DELIVERED);
         transaction.setCreatedBy(order.getCreatedBy());
 
         transactionRepository.save(transaction);
+
     }
+
 }

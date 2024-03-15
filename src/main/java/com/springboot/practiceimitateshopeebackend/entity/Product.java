@@ -19,9 +19,16 @@ public class Product extends AuditEntity{
     private String shopName;
     private String productName;
     private Double price;
-    private Long quantity;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Cart> cart;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private Inventory inventory;
+
+
+
+
+
     
 }

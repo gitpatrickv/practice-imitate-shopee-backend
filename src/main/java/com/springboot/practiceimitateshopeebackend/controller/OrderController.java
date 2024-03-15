@@ -2,6 +2,7 @@ package com.springboot.practiceimitateshopeebackend.controller;
 
 import com.springboot.practiceimitateshopeebackend.entity.Order;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
+import com.springboot.practiceimitateshopeebackend.model.CompleteOrderRequest;
 import com.springboot.practiceimitateshopeebackend.model.OrderModel;
 import com.springboot.practiceimitateshopeebackend.service.OrderService;
 import lombok.RequiredArgsConstructor;

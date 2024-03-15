@@ -1,11 +1,16 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
+import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
+import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
+import com.springboot.practiceimitateshopeebackend.model.CompleteOrderRequest;
 import com.springboot.practiceimitateshopeebackend.model.OrderModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
+import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.OrderRepository;
+import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.OrderService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
@@ -18,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +33,12 @@ public class OrderServiceImpl implements OrderService {
 
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final InventoryRepository inventoryRepository;
     private final CartMapper mapper;
     private final OrderMapper orderMapper;
     private final TransactionServiceImpl transactionService;
+    private final InventoryServiceImpl inventoryService;
 
     @Override
     public List<CartModel> checkout() {
@@ -51,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
         for (Cart carts : cart) {
             cartModel.add(mapper.mapCartEntityToCartModel(carts));
             this.orderDetails(carts);
+            this.updateQuantity(carts);
         }
         cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
     }
@@ -73,6 +83,15 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    private void updateQuantity(Cart cart){
+        Optional<Product> product = productRepository.findById(cart.getProduct().getProductId());
+        if(cart.getQuantity() > product.get().getInventory().getQuantity()) {
+            throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
+        }else{
+            product.get().getInventory().setQuantity(product.get().getInventory().getQuantity() - cart.getQuantity());
+        }
+    }
+
     @Override
     public void cancelOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
@@ -83,8 +102,14 @@ public class OrderServiceImpl implements OrderService {
         for (Order orders : order) {
             orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
             transactionService.saveCancelledOrder(orders);
+            this.updateQuantityAfterCancel(orders);
         }
         orderRepository.deleteAllByEmailAndShopName(username, shopName);
+    }
+
+    private void updateQuantityAfterCancel(Order order){
+        Optional<Product> product = productRepository.findById(order.getProductId());
+        product.get().getInventory().setQuantity(product.get().getInventory().getQuantity() + order.getQuantity());
     }
 
     @Override
@@ -100,6 +125,5 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
-
 
 }
