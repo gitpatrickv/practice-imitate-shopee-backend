@@ -1,9 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.service;
 
-import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.model.CartRequest;
-import com.springboot.practiceimitateshopeebackend.model.Response;
 
 import java.util.List;
 

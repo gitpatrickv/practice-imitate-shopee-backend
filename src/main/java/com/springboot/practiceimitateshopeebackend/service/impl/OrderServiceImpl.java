@@ -1,14 +1,11 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
-import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
-import com.springboot.practiceimitateshopeebackend.model.CompleteOrderRequest;
 import com.springboot.practiceimitateshopeebackend.model.OrderModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
-import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.OrderRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
@@ -34,11 +31,9 @@ public class OrderServiceImpl implements OrderService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final InventoryRepository inventoryRepository;
     private final CartMapper mapper;
     private final OrderMapper orderMapper;
     private final TransactionServiceImpl transactionService;
-    private final InventoryServiceImpl inventoryService;
 
     @Override
     public List<CartModel> checkout() {
