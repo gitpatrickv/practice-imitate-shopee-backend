@@ -23,5 +23,5 @@ public class Transaction extends AuditEntity{
     private Double totalAmount;
     private Long quantity;
     private String orderStatus;
-
+    private Long productId;
 }

@@ -9,14 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TransactionModel {
+public class QuantityRequest {
 
-    private String transactionId;
-    private String productName;
-    private String shopName;
-    private Double price;
-    private Double totalAmount;
-    private Long quantity;
-    private String orderStatus;
     private Long productId;
+    private Long quantity;
 }

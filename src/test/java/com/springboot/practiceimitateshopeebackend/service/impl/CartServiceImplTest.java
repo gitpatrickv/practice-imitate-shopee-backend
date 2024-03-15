@@ -1,10 +1,12 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
+import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.CartRequest;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
+import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
@@ -30,6 +32,8 @@ class CartServiceImplTest {
 
     @Mock
     UserRepository userRepository;
+    @Mock
+    InventoryRepository inventoryRepository;
 
     @Mock
     ProductRepository productRepository;
@@ -40,7 +44,7 @@ class CartServiceImplTest {
     }
 
     @Test
-    public void updateQuantityIfProductAlreadyExistsInTheCartTest(){
+    public void addQuantityIfProductAlreadyExistsInTheCartTest(){
 
         CartRequest cartRequest = new CartRequest();
         cartRequest.setProductId(1L);
@@ -49,10 +53,13 @@ class CartServiceImplTest {
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
+        Inventory inventory = new Inventory();
+        inventory.setQuantity(10L);
+
         Product product = new Product();
         product.setPrice(100.0);
         product.setProductId(1L);
-        product.setQuantity(10L);
+        product.setInventory(inventory);
 
         Cart existingCart = new Cart();
         existingCart.setCreatedBy(user.getEmail());
@@ -67,7 +74,7 @@ class CartServiceImplTest {
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getQuantity());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThan(inventory.getQuantity());
         Assertions.assertThat(existingCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
         Assertions.assertThat(existingCart.getQuantity()).isEqualTo(4L);
         Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(400);
@@ -84,10 +91,13 @@ class CartServiceImplTest {
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
+        Inventory inventory = new Inventory();
+        inventory.setQuantity(10L);
+
         Product product = new Product();
         product.setPrice(100.0);
         product.setProductId(1L);
-        product.setQuantity(10L);
+        product.setInventory(inventory);
         product.setShopName("SHOP");
         product.setProductName("PRODUCT NAME");
 
@@ -107,7 +117,7 @@ class CartServiceImplTest {
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(newCart.getQuantity()).isLessThan(product.getQuantity());
+        Assertions.assertThat(newCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
         Assertions.assertThat(newCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
         Assertions.assertThat(newCart.getShopName()).isEqualTo(product.getShopName());
         Assertions.assertThat(newCart.getProductName()).isEqualTo(product.getProductName());
@@ -127,10 +137,13 @@ class CartServiceImplTest {
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
+        Inventory inventory = new Inventory();
+        inventory.setQuantity(10L);
+
         Product product = new Product();
         product.setPrice(100.0);
         product.setProductId(1L);
-        product.setQuantity(10L);
+        product.setInventory(inventory);
 
         Cart existingCart = new Cart();
         existingCart.setCreatedBy(user.getEmail());
@@ -145,7 +158,7 @@ class CartServiceImplTest {
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getQuantity());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
         Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
         Assertions.assertThat(existingCart.getQuantity()).isEqualTo(4L);
         Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(400);
@@ -160,10 +173,13 @@ class CartServiceImplTest {
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
+        Inventory inventory = new Inventory();
+        inventory.setQuantity(10L);
+
         Product product = new Product();
         product.setPrice(100.0);
         product.setProductId(1L);
-        product.setQuantity(10L);
+        product.setInventory(inventory);
 
         Cart existingCart = new Cart();
         existingCart.setCreatedBy(user.getEmail());
@@ -178,7 +194,7 @@ class CartServiceImplTest {
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getQuantity());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
         Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
         Assertions.assertThat(existingCart.getQuantity()).isEqualTo(2L);
         Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(200);

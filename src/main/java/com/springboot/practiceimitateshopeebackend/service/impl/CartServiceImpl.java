@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
         try {
             if (existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
                 Cart cart = existingCart.get();
-                if (cart.getQuantity() < product.get().getQuantity()) {
+                if (cart.getQuantity() < product.get().getInventory().getQuantity()) {
                     cart.setQuantity(existingCart.get().getQuantity() + cartRequest.getQuantity());
                     cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                     cart.setLastModifiedBy(user.get().getEmail());
@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService {
                 }
             } else {
                 Cart cart = new Cart();
-                if (cartRequest.getQuantity() > product.get().getQuantity()) {
+                if (cartRequest.getQuantity() > product.get().getInventory().getQuantity()) {
                     log.info(StringUtils.OUT_OF_STOCK);
                 } else {
                     cart.setProduct(product.get());
@@ -90,7 +90,7 @@ public class CartServiceImpl implements CartService {
         if(existingCart.isPresent()  && existingCart.get().getCreatedBy().equals(username)) {
             Cart cart = existingCart.get();
 
-            if(cart.getQuantity() < product.get().getQuantity()){
+            if(cart.getQuantity() < product.get().getInventory().getQuantity()){
                 cart.setQuantity(existingCart.get().getQuantity() + 1);
                 cart.setTotalAmount(existingCart.get().getQuantity() * product.get().getPrice());
                 cart.setLastModifiedBy(user.get().getEmail());
