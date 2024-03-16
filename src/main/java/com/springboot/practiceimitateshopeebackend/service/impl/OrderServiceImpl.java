@@ -50,14 +50,14 @@ public class OrderServiceImpl implements OrderService {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
         List<CartModel> cartModel = new ArrayList<>();
-        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
+        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmail(username);
 
         for (Cart carts : cart) {
             cartModel.add(mapper.mapCartEntityToCartModel(carts));
             this.orderDetails(carts);
             this.updateQuantity(carts);
         }
-        cartRepository.deleteAllByFilterTrueAndUserEmailAndCreatedBy(username, username);
+        cartRepository.deleteAllByFilterTrueAndUserEmail(username);
     }
     private void orderDetails(Cart cart){
         Order order = new Order();
