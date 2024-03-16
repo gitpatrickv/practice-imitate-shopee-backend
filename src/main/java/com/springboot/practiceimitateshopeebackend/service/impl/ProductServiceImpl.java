@@ -1,11 +1,9 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
-import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
-import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
@@ -24,7 +22,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
-    private final InventoryRepository inventoryRepository;
     private final ProductMapper mapper;
 
     @Override
@@ -47,9 +44,6 @@ public class ProductServiceImpl implements ProductService {
             if (model.getPrice() != null) {
                 product.setPrice(model.getPrice());
             }
-            //if (model.getQuantity() != null) {
-                //inventory.setQuantity(model.getQuantity());
-            //}
             this.updateCart(product);
             product.setLastModifiedBy(username);
         }

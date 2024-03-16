@@ -24,6 +24,5 @@ public class ProductModel {
     private String productName;
     @NotNull(message = "{price.not.null}")
     private Double price;
-    @NotNull(message = "{quantity.not.null}")
-    private Long quantity;
+
 }
