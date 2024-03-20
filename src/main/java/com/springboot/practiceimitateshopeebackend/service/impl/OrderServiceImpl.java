@@ -49,14 +49,13 @@ public class OrderServiceImpl implements OrderService {
     public void placeOrder() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<CartModel> cartModel = new ArrayList<>();
         List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmail(username);
 
         for (Cart carts : cart) {
-            cartModel.add(mapper.mapCartEntityToCartModel(carts));
             this.orderDetails(carts);
             this.updateQuantity(carts);
         }
+
         cartRepository.deleteAllByFilterTrueAndUserEmail(username);
     }
     private void orderDetails(Cart cart){
@@ -91,11 +90,9 @@ public class OrderServiceImpl implements OrderService {
     public void cancelOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<OrderModel> orderList = new ArrayList<>();
         List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
 
         for (Order orders : order) {
-            orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
             transactionService.saveCancelledOrder(orders);
             this.updateQuantityAfterCancel(orders);
         }
@@ -111,13 +108,12 @@ public class OrderServiceImpl implements OrderService {
     public void completeOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<OrderModel> orderList = new ArrayList<>();
         List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
 
         for (Order orders : order) {
-            orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
             transactionService.saveCompletedOrder(orders);
         }
+
         orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
 
