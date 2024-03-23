@@ -16,13 +16,11 @@ import java.util.Optional;
 public class ColorVariationServiceImpl implements ColorVariationService {
 
     private final ColorVariationRepository colorVariationRepository;
-    private final ProductRepository productRepository;
+
     @Override
     public void addColorVariation(ColorRequest colorRequest) {
 
-        //Optional<Product> product = productRepository.findById(colorRequest.getProductId());
         ColorVariation colorVariation = new ColorVariation();
-        //colorVariation.setProductId(product.get().getProductId());
         colorVariation.setColor(colorRequest.getColor());
         colorVariationRepository.save(colorVariation);
     }
