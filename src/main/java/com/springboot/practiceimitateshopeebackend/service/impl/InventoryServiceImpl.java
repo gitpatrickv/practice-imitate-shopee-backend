@@ -26,12 +26,15 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryRequest addQuantity(InventoryRequest inventoryRequest) {
 
         Optional<Product> product = productRepository.findById(inventoryRequest.getProductId());
-        Optional<ColorVariation> colorVariation = colorVariationRepository.findByColorAndProductId(inventoryRequest.getColor(), inventoryRequest.getProductId());
+        //Optional<ColorVariation> colorVariation = colorVariationRepository.findByColorAndProductId(inventoryRequest.getColor(), inventoryRequest.getProductId());
+        Optional<ColorVariation> colorVariation = colorVariationRepository.findByColor(inventoryRequest.getColor());
 
         Inventory inv = new Inventory();
                 inv.setProduct(product.get());
-                inv.setQuantity(inventoryRequest.getQuantity());
                 inv.setProductName(product.get().getProductName());
+                inv.setQuantity(inventoryRequest.getQuantity());
+                //inv.setColorVariation(colorVariation.get());
+                //inv.setColor(colorVariation.get().getColor());
                 inv.setColorVariation(colorVariation.get());
                 inv.setColor(colorVariation.get().getColor());
                 inventoryRepository.save(inv);

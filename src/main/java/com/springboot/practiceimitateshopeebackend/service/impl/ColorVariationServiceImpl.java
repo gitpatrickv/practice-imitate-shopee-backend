@@ -20,9 +20,9 @@ public class ColorVariationServiceImpl implements ColorVariationService {
     @Override
     public void addColorVariation(ColorRequest colorRequest) {
 
-        Optional<Product> product = productRepository.findById(colorRequest.getProductId());
+        //Optional<Product> product = productRepository.findById(colorRequest.getProductId());
         ColorVariation colorVariation = new ColorVariation();
-        colorVariation.setProductId(product.get().getProductId());
+        //colorVariation.setProductId(product.get().getProductId());
         colorVariation.setColor(colorRequest.getColor());
         colorVariationRepository.save(colorVariation);
     }

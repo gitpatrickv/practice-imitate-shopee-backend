@@ -11,5 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ColorVariationRepository extends JpaRepository<ColorVariation, Long> {
 
-    Optional<ColorVariation> findByColorAndProductId(Color color, Long id);
+    //Optional<ColorVariation> findByColorAndProductId(Color color, Long id);
+
+    Optional<ColorVariation> findByColor(Color color);
 }
