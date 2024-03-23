@@ -16,10 +16,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ColorRequest {
 
-    @Valid
-
-    //@NotNull(message = "{product.id.must.not.be.null}")
-    //private Long productId;
     @Enumerated(EnumType.STRING)
     private Color color;
 
