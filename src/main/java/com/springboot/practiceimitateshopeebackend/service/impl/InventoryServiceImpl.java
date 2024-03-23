@@ -71,6 +71,12 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public void addQuantity(QuantityRequest quantityRequest) {
 
+        Optional<Inventory> inventory = inventoryRepository.findById(quantityRequest.getInventoryId());
+
+
+
+
+
     }
 
 
