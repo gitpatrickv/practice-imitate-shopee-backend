@@ -1,10 +1,10 @@
 package com.springboot.practiceimitateshopeebackend.service;
 
-import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
+import com.springboot.practiceimitateshopeebackend.model.InventoryRequest;
 
 public interface InventoryService {
 
-    QuantityRequest addQuantity(QuantityRequest quantityRequest);
+    InventoryRequest addQuantity(InventoryRequest inventoryRequest);
 
-    QuantityRequest decreaseQuantity(QuantityRequest quantityRequest);
+    InventoryRequest decreaseQuantity(InventoryRequest inventoryRequest);
 }

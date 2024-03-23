@@ -18,6 +18,7 @@ public class ColorVariation{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long colorId;
+    private Long productId;
 
     @Enumerated(EnumType.STRING)
     private Color color;

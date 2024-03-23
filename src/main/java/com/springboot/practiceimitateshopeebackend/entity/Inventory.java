@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.entity;
 
+import com.springboot.practiceimitateshopeebackend.entity.constants.Color;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Inventory extends AuditEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long inventoryId;
     private Long quantity;
+    private String productName;
+
+    @Enumerated(EnumType.STRING)
+    private Color color;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

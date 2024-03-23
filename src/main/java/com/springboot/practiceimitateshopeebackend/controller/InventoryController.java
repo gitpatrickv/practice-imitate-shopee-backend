@@ -1,6 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
-import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
+import com.springboot.practiceimitateshopeebackend.model.InventoryRequest;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,13 @@ public class InventoryController {
     private final InventoryService inventoryService;
     @PostMapping("/addQuantity")
     @ResponseStatus(HttpStatus.OK)
-    QuantityRequest addQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
-        return inventoryService.addQuantity(quantityRequest);
+    InventoryRequest addQuantity(@RequestBody @Valid InventoryRequest inventoryRequest){
+        return inventoryService.addQuantity(inventoryRequest);
     }
 
     @PostMapping("/decreaseQty")
     @ResponseStatus(HttpStatus.OK)
-    public QuantityRequest decreaseQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
-        return inventoryService.decreaseQuantity(quantityRequest);
+    public InventoryRequest decreaseQuantity(@RequestBody @Valid InventoryRequest inventoryRequest){
+        return inventoryService.decreaseQuantity(inventoryRequest);
     }
 }
