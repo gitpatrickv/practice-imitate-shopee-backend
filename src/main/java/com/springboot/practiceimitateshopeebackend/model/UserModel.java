@@ -6,7 +6,6 @@ import com.springboot.practiceimitateshopeebackend.validation.ConfirmPasswordVal
 import com.springboot.practiceimitateshopeebackend.validation.UniqueEmailValid;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Transient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

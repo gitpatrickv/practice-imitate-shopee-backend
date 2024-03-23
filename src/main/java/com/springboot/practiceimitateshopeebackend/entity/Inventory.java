@@ -20,6 +20,7 @@ public class Inventory extends AuditEntity{
     private Long inventoryId;
     private Long quantity;
     private String productName;
+    private String shopName;
 
     @Enumerated(EnumType.STRING)
     private Color color;

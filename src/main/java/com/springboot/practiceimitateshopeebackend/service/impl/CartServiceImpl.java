@@ -1,10 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
-import com.springboot.practiceimitateshopeebackend.entity.Cart;
-import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.entity.User;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
-import com.springboot.practiceimitateshopeebackend.model.CartRequest;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
@@ -18,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
