@@ -1,10 +1,10 @@
 package com.springboot.practiceimitateshopeebackend.service;
 
-import com.springboot.practiceimitateshopeebackend.model.InventoryRequest;
+import com.springboot.practiceimitateshopeebackend.model.ColorVariationRequest;
 
 public interface InventoryService {
 
-    InventoryRequest addQuantity(InventoryRequest inventoryRequest);
+    void addColorVariation(ColorVariationRequest colorVariationRequest);
 
-    InventoryRequest decreaseQuantity(InventoryRequest inventoryRequest);
+    ColorVariationRequest decreaseQuantity(ColorVariationRequest colorVariationRequest);
 }

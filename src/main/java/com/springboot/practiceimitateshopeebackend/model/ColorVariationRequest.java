@@ -14,14 +14,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InventoryRequest {
+public class ColorVariationRequest {
 
     @Valid
 
     @NotNull(message = "{product.id.must.not.be.null}")
     private Long productId;
-    @NotNull(message = "{quantity.not.null}")
-    private Long quantity;
+
     @Enumerated(EnumType.STRING)
     private Color color;
 }

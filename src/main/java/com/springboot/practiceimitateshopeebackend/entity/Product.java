@@ -20,7 +20,7 @@ public class Product extends AuditEntity{
     private String productName;
     private Double price;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Inventory> inventory;
 
 //    @ManyToOne

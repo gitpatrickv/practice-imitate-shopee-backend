@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
+import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
@@ -45,10 +46,21 @@ public class ProductServiceImpl implements ProductService {
                 product.setPrice(model.getPrice());
             }
             //this.updateCart(product);
+            this.updateInventory(product);
             product.setLastModifiedBy(username);
         }
         Product savedProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(savedProduct);
+    }
+
+    private void updateInventory(Product product){
+        List<Inventory> inventories = product.getInventory();
+
+        if(inventories != null){
+            for(Inventory inventory : inventories){
+                inventory.setProduct(product);
+            }
+        }
     }
 /*
     private void updateCart(Product product) {
