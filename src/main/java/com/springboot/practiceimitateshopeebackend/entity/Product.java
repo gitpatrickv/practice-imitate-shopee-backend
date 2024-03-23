@@ -20,15 +20,15 @@ public class Product extends AuditEntity{
     private String productName;
     private Double price;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Cart> cart;
+    @OneToMany(mappedBy = "product")
+    private List<Inventory> inventory;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    private Inventory inventory;
-
-
-
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
 
-    
+
+
+
 }

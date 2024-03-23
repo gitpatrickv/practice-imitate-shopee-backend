@@ -1,15 +1,11 @@
 package com.springboot.practiceimitateshopeebackend.repository;
 
-import com.springboot.practiceimitateshopeebackend.entity.Cart;
+import com.springboot.practiceimitateshopeebackend.entity.SizeVariation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Long> {
-
+public interface SizeVariationRepository extends JpaRepository<SizeVariation, Long> {
 
 
 }

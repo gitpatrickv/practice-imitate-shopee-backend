@@ -23,6 +23,7 @@ public class CartController {
     public List<CartModel> cartList(){
         return cartService.cartList();
     }
+    /*
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
     public void addToCart(@RequestBody @Valid CartRequest cartRequest){
@@ -53,4 +54,6 @@ public class CartController {
         cartService.deleteProductsInCart(id);
     }
 
+
+     */
 }

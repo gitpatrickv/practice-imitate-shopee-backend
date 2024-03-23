@@ -24,11 +24,14 @@ public class Cart extends AuditEntity{
     private boolean filter;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
+
+    @OneToMany(mappedBy = "cart")
+    private List<Order> order;
 
 }

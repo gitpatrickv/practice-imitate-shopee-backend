@@ -36,4 +36,16 @@ public class Order extends AuditEntity{
     private String paymentMethod;
     private String orderStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    private List<Transaction> transaction;
+
+
 }

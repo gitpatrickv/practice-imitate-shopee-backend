@@ -27,21 +27,15 @@ public class InventoryServiceImpl implements InventoryService {
         Optional<Product> product = productRepository.findById(quantityRequest.getProductId());
         boolean isNew = inventoryRepository.existsById(quantityRequest.getProductId());
         Inventory inv;
-        try {
+
             if (!isNew) {
                 inv = new Inventory();
                 inv.setProduct(product.get());
                 inv.setQuantity(quantityRequest.getQuantity());
                 inventoryRepository.save(inv);
             }
-            else {
-                inv = product.get().getInventory();
-                inv.setQuantity(inv.getQuantity() + quantityRequest.getQuantity());
-                inventoryRepository.save(inv);
-            }
-        }catch (Exception e){
-            throw new NoSuchElementException(StringUtils.PRODUCT_NOT_FOUND);
-        }
+
+
         return QuantityRequest.builder()
                 .productId(quantityRequest.getProductId())
                 .quantity(quantityRequest.getQuantity())
@@ -51,23 +45,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public QuantityRequest decreaseQuantity(QuantityRequest quantityRequest) {
-
-        Optional<Product> product = productRepository.findById(quantityRequest.getProductId());
-
-        Inventory inv = product.get().getInventory();
-
-        if(quantityRequest.getQuantity() > inv.getQuantity()){
-            throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
-        }
-        else {
-            inv.setQuantity(inv.getQuantity() - quantityRequest.getQuantity());
-            inventoryRepository.save(inv);
-        }
-        return QuantityRequest.builder()
-                .productId(quantityRequest.getProductId())
-                .quantity(quantityRequest.getQuantity())
-                .build();
+        return null;
     }
-
 
 }

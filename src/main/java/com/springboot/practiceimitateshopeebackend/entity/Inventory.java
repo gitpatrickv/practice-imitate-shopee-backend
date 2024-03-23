@@ -3,6 +3,8 @@ package com.springboot.practiceimitateshopeebackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -17,8 +19,18 @@ public class Inventory extends AuditEntity{
     private Long inventoryId;
     private Long quantity;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "color_id")
+    private ColorVariation colorVariation;
+
+    @OneToMany(mappedBy = "inventory")
+    private List<Cart> cart;
+
+    @OneToMany(mappedBy = "inventory")
+    private List<SizeColorVariation> sizeColorVariation;
 
 }

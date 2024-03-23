@@ -49,76 +49,20 @@ public class OrderServiceImpl implements OrderService {
     public void placeOrder() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<CartModel> cartModel = new ArrayList<>();
-        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmail(username);
 
-        for (Cart carts : cart) {
-            cartModel.add(mapper.mapCartEntityToCartModel(carts));
-            this.orderDetails(carts);
-            this.updateQuantity(carts);
-        }
-        cartRepository.deleteAllByFilterTrueAndUserEmail(username);
-    }
-    private void orderDetails(Cart cart){
-        Order order = new Order();
-        order.setName(cart.getUser().getName());
-        order.setAddress(cart.getUser().getAddress());
-        order.setEmail(cart.getUser().getEmail());
-        order.setContactNumber(cart.getUser().getContactNumber());
-        order.setPrice(cart.getPrice());
-        order.setTotalAmount(cart.getTotalAmount());
-        order.setShopName(cart.getShopName());
-        order.setProductName(cart.getProductName());
-        order.setQuantity(cart.getQuantity());
-        order.setProductId(cart.getProduct().getProductId());
-        order.setCreatedBy(cart.getCreatedBy());
-        order.setPaymentMethod(StringUtils.CASH_ON_DELIVERY);
-        order.setOrderStatus(StringUtils.PROCESSING);
-        order.setCreatedBy(cart.getCreatedBy());
-        orderRepository.save(order);
     }
 
-    private void updateQuantity(Cart cart){
-        Optional<Product> product = productRepository.findById(cart.getProduct().getProductId());
-        if(cart.getQuantity() > product.get().getInventory().getQuantity()) {
-            throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
-        }else{
-            product.get().getInventory().setQuantity(product.get().getInventory().getQuantity() - cart.getQuantity());
-        }
-    }
 
     @Override
     public void cancelOrder(String shopName) {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<OrderModel> orderList = new ArrayList<>();
-        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
-
-        for (Order orders : order) {
-            orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
-            transactionService.saveCancelledOrder(orders);
-            this.updateQuantityAfterCancel(orders);
-        }
-        orderRepository.deleteAllByEmailAndShopName(username, shopName);
-    }
-
-    private void updateQuantityAfterCancel(Order order){
-        Optional<Product> product = productRepository.findById(order.getProductId());
-        product.get().getInventory().setQuantity(product.get().getInventory().getQuantity() + order.getQuantity());
     }
 
     @Override
     public void completeOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        List<OrderModel> orderList = new ArrayList<>();
-        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
 
-        for (Order orders : order) {
-            orderList.add(orderMapper.mapOrderEntityToOrderModel(orders));
-            transactionService.saveCompletedOrder(orders);
-        }
-        orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
 
 }

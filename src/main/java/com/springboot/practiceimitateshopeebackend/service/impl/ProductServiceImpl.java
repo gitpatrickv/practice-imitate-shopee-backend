@@ -44,13 +44,13 @@ public class ProductServiceImpl implements ProductService {
             if (model.getPrice() != null) {
                 product.setPrice(model.getPrice());
             }
-            this.updateCart(product);
+            //this.updateCart(product);
             product.setLastModifiedBy(username);
         }
         Product savedProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(savedProduct);
     }
-
+/*
     private void updateCart(Product product) {
         List<Cart> carts = product.getCart();
         if (carts != null) {
@@ -63,6 +63,8 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
+
+ */
 
     @Override
     public List<ProductModel> searchProduct(String search) {

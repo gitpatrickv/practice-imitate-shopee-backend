@@ -24,4 +24,8 @@ public class Transaction extends AuditEntity{
     private Long quantity;
     private String orderStatus;
     private Long productId;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 }
