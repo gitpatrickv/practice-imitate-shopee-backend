@@ -1,15 +1,14 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
-import com.springboot.practiceimitateshopeebackend.entity.ColorVariation;
 import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.model.ColorVariationRequest;
-import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
-import com.springboot.practiceimitateshopeebackend.repository.ColorVariationRepository;
+import com.springboot.practiceimitateshopeebackend.entity.ProductVariation;
+import com.springboot.practiceimitateshopeebackend.model.StockRequest;
+
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
+import com.springboot.practiceimitateshopeebackend.repository.ProductVariationRepository;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
-
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,50 +25,62 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
     private final ProductRepository productRepository;
-    private final ColorVariationRepository colorVariationRepository;
-    @Override
-    public void addColorVariation(ColorVariationRequest colorVariationRequest) {
+    private final ProductVariationRepository productVariationRepository;
 
-        Optional<Product> product = productRepository.findById(colorVariationRequest.getProductId());
-        Optional<ColorVariation> colorVariation = colorVariationRepository.findByColor(colorVariationRequest.getColor());
-        boolean isNew = inventoryRepository.existsByColorAndProduct_ProductId(colorVariationRequest.getColor(), colorVariationRequest.getProductId());
+
+
+    @Override
+    public void saveProductStocks(StockRequest stockRequest) {
+
+        Optional<Product> product = productRepository.findById(stockRequest.getId());
+        boolean isNew = inventoryRepository.existsByProduct_ProductId(stockRequest.getId());
+        //Optional<Inventory> inventory = inventoryRepository.findByProduct_ProductId(stockRequest.getId());
+        //Inventory inv;
 
         if(!isNew) {
             Inventory inv = new Inventory();
             inv.setProduct(product.get());
             inv.setProductName(product.get().getProductName());
             inv.setShopName(product.get().getShopName());
-            inv.setColorVariation(colorVariation.get());
-            inv.setColor(colorVariation.get().getColor());
+            inv.setPrice(stockRequest.getPrice());
+            inv.setQuantity(stockRequest.getQuantity());
             inventoryRepository.save(inv);
+        }else{
+            log.info(StringUtils.PRODUCT_ALREADY_EXISTS);
         }
-        else{
-            log.info(StringUtils.PRODUCT_VARIATION_ALREADY_EXISTS);
-        }
-    }
-    @Override
-    public void addQuantity(QuantityRequest quantityRequest) {
 
-        Optional<Product> product = productRepository.findById(quantityRequest.getProductId());
-        boolean isNew = inventoryRepository.existsByProduct_ProductId(quantityRequest.getProductId());
-        Optional<Inventory> inventory = inventoryRepository.findByProduct_ProductId(quantityRequest.getProductId());
-        Inventory inv;
-
-        if(!isNew) {
-            inv = new Inventory();
-            inv.setProduct(product.get());
-            inv.setProductName(product.get().getProductName());
-            inv.setShopName(product.get().getShopName());
-            inv.setPrice(quantityRequest.getPrice());
-            inv.setQuantity(quantityRequest.getQuantity());
-            inventoryRepository.save(inv);
-        }
+        /*
         else{
             inv = inventory.get();
-            inv.setQuantity(inv.getQuantity() + quantityRequest.getQuantity());
+            inv.setQuantity(inv.getQuantity() + stockRequest.getQuantity());
             inventoryRepository.save(inv);
         }
+        */
     }
+
+    @Override
+    public void saveProductVariationStocks(StockRequest stockRequest) {
+        Optional<ProductVariation> productVariation = productVariationRepository.findById(stockRequest.getId());
+        boolean isNew = inventoryRepository.existsByProductVariation_VariationId(stockRequest.getId());
+
+        if(!isNew){
+            Inventory inv = new Inventory();
+            inv.setProductVariation(productVariation.get());
+            inv.setProduct(productVariation.get().getProduct());
+            inv.setColor(productVariation.get().getColor());
+            inv.setSize(productVariation.get().getSize());
+            inv.setQuantity(stockRequest.getQuantity());
+            inv.setPrice(stockRequest.getPrice());
+            inv.setProductName(productVariation.get().getProduct().getProductName());
+            inv.setShopName(productVariation.get().getProduct().getShopName());
+            inventoryRepository.save(inv);
+        }else{
+            log.info(StringUtils.PRODUCT_ALREADY_EXISTS);
+        }
+
+    }
+
+
 
 
 }

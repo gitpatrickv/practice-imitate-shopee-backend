@@ -12,23 +12,21 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
     private String shopName;
     private String productName;
-    //private Double price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Inventory> inventory;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductVariation> productVariation;
+
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private User user;
-
-
-
-
 
 }

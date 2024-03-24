@@ -11,18 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class QuantityRequest {
+public class StockRequest {
 
     @Valid
 
     @NotNull(message = "{product.id.must.not.be.null}")
-    private Long productId;
+    private Long id;
 
     @NotNull(message = "{price.not.null}")
     private Double price;
-
-    //@NotNull(message = "{inventory.id.must.not.be.null}")
-    //private Long inventoryId;
 
     @NotNull(message = "{quantity.not.null}")
     private Long quantity;

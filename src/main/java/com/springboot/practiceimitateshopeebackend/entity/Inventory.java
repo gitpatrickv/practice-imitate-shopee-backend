@@ -1,6 +1,5 @@
 package com.springboot.practiceimitateshopeebackend.entity;
 
-import com.springboot.practiceimitateshopeebackend.entity.constants.Color;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "inventory")
-public class Inventory {
+public class Inventory extends AuditEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,22 +22,27 @@ public class Inventory {
     private String shopName;
     private Double price;
     private String skuCode;
+    private String color;
+    private String size;
 
-    @Enumerated(EnumType.STRING)
-    private Color color;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "color_id")
-    private ColorVariation colorVariation;
+    @JoinColumn(name = "product_variation_id")
+    private ProductVariation productVariation;
 
     @OneToMany(mappedBy = "inventory")
     private List<Cart> cart;
 
-    @OneToMany(mappedBy = "inventory")
-    private List<SizeColorVariation> sizeColorVariation;
+
+
+
+
+
+
+
 
 }
