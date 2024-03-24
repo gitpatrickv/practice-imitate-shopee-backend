@@ -29,58 +29,14 @@ public class InventoryServiceImpl implements InventoryService {
 
 
 
-    @Override
-    public void saveProductStocks(StockRequest stockRequest) {
 
-        Optional<Product> product = productRepository.findById(stockRequest.getId());
-        boolean isNew = inventoryRepository.existsByProduct_ProductId(stockRequest.getId());
-        //Optional<Inventory> inventory = inventoryRepository.findByProduct_ProductId(stockRequest.getId());
-        //Inventory inv;
 
-        if(!isNew) {
-            Inventory inv = new Inventory();
-            inv.setProduct(product.get());
-            inv.setProductName(product.get().getProductName());
-            inv.setShopName(product.get().getShopName());
-            inv.setPrice(stockRequest.getPrice());
-            inv.setQuantity(stockRequest.getQuantity());
-            inventoryRepository.save(inv);
-        }else{
-            log.info(StringUtils.PRODUCT_ALREADY_EXISTS);
-        }
-
-        /*
-        else{
-            inv = inventory.get();
-            inv.setQuantity(inv.getQuantity() + stockRequest.getQuantity());
-            inventoryRepository.save(inv);
-        }
-        */
-    }
-
-    @Override
-    public void saveProductVariationStocks(StockRequest stockRequest) {
-        Optional<ProductVariation> productVariation = productVariationRepository.findById(stockRequest.getId());
-        boolean isNew = inventoryRepository.existsByProductVariation_VariationId(stockRequest.getId());
-
-        if(!isNew){
-            Inventory inv = new Inventory();
-            inv.setProductVariation(productVariation.get());
-            inv.setProduct(productVariation.get().getProduct());
-            inv.setColor(productVariation.get().getColor());
-            inv.setSize(productVariation.get().getSize());
-            inv.setQuantity(stockRequest.getQuantity());
-            inv.setPrice(stockRequest.getPrice());
-            inv.setProductName(productVariation.get().getProduct().getProductName());
-            inv.setShopName(productVariation.get().getProduct().getShopName());
-            inventoryRepository.save(inv);
-        }else{
-            log.info(StringUtils.PRODUCT_ALREADY_EXISTS);
-        }
 
     }
 
 
 
 
-}
+
+
+

@@ -14,16 +14,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @PostMapping("/stock/add")
-    @ResponseStatus(HttpStatus.OK)
-    public void saveProductStocks(@RequestBody @Valid StockRequest stockRequest) {
-        inventoryService.saveProductStocks(stockRequest);
-    }
-    @PostMapping("/stock/variation/add")
-    @ResponseStatus(HttpStatus.OK)
-    public void saveProductVariationStocks(@RequestBody StockRequest stockRequest) {
-        inventoryService.saveProductVariationStocks(stockRequest);
-    }
+
 /*
     @PostMapping("/decreaseQty")
     @ResponseStatus(HttpStatus.OK)

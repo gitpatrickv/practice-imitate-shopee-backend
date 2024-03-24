@@ -5,9 +5,7 @@ import com.springboot.practiceimitateshopeebackend.model.StockRequest;
 
 public interface InventoryService {
 
-    void saveProductStocks(StockRequest stockRequest);
 
-    void saveProductVariationStocks(StockRequest stockRequest);
 
 
 }
