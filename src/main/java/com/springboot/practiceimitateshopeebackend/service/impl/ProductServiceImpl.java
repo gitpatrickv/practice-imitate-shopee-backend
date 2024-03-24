@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
         Product product;
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
+
         if(!isNew) {
             product = mapper.mapProductModelToProductEntity(model);
             product.setCreatedBy(username);
@@ -49,17 +50,19 @@ public class ProductServiceImpl implements ProductService {
             this.updateInventory(product);
             product.setLastModifiedBy(username);
         }
-
         Product savedProduct = productRepository.save(product);
 
-        Inventory inv = new Inventory();
-        inv.setProduct(savedProduct);
-        inv.setPrice(model.getPrice());
-        inv.setQuantity(model.getQuantity());
-        inv.setProductName(savedProduct.getProductName());
-        inv.setShopName(savedProduct.getShopName());
-        inventoryRepository.save(inv);
-
+        boolean isExists = inventoryRepository.existsByProduct_ProductId(savedProduct.getProductId());
+        if(!isExists) {
+            Inventory inventory = Inventory.builder()
+                    .product(savedProduct)
+                    .price(model.getPrice())
+                    .quantity(model.getQuantity())
+                    .productName(savedProduct.getProductName())
+                    .shopName(savedProduct.getShopName())
+                    .build();
+            inventoryRepository.save(inventory);
+        }
         return mapper.mapProductEntityToProductModel(savedProduct);
 
     }
@@ -70,6 +73,9 @@ public class ProductServiceImpl implements ProductService {
         if(inventories != null){
             for(Inventory inventory : inventories){
                 inventory.setProduct(product);
+                inventory.setProductName(product.getProductName());
+                inventory.setShopName(product.getShopName());
+                inventoryRepository.save(inventory);
             }
         }
     }
