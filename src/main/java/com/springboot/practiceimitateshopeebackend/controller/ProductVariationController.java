@@ -1,7 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
 import com.springboot.practiceimitateshopeebackend.model.ProductVariationRequest;
-import com.springboot.practiceimitateshopeebackend.model.StockRequest;
 import com.springboot.practiceimitateshopeebackend.service.ProductVariationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +20,4 @@ public class ProductVariationController {
         productVariationService.addVariation(request);
     }
 
-    @PostMapping("/stock/add")
-    @ResponseStatus(HttpStatus.OK)
-    public void saveProductVariationStocks(@RequestBody @Valid StockRequest stockRequest) {
-        productVariationService.saveProductVariationStocks(stockRequest);
-    }
 }

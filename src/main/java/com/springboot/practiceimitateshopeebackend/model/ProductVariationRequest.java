@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.model;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +22,10 @@ public class ProductVariationRequest {
     private String color;
     @NotNull(message = "{size.required}")
     private String size;
+
+    @NotNull(message = "{this.field.cannot.be.empty}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{price.required}")
+    private Double price;
+    @NotNull(message = "{quantity.not.null}")
+    private Long quantity;
 }

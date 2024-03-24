@@ -34,7 +34,6 @@ public class ProductServiceImpl implements ProductService {
         Product product;
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
-
         if(!isNew) {
             product = mapper.mapProductModelToProductEntity(model);
             product.setCreatedBy(username);

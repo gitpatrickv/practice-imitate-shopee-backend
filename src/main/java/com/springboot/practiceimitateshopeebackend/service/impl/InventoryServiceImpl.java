@@ -29,9 +29,18 @@ public class InventoryServiceImpl implements InventoryService {
 
         Optional<Inventory> inventory = inventoryRepository.findById(quantityRequest.getId());
 
-            Inventory inv = inventory.get();
-            inv.setQuantity(inv.getQuantity() + quantityRequest.getQuantity());
-            inventoryRepository.save(inv);
+        Inventory inv = inventory.get();
+        inv.setQuantity(inv.getQuantity() + quantityRequest.getQuantity());
+        inventoryRepository.save(inv);
+    }
+
+    @Override
+    public void decreaseQuantity(QuantityRequest quantityRequest) {
+        Optional<Inventory> inventory = inventoryRepository.findById(quantityRequest.getId());
+
+        Inventory inv = inventory.get();
+        inv.setQuantity(inv.getQuantity() - quantityRequest.getQuantity());
+        inventoryRepository.save(inv);
     }
 }
 

@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends AuditEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_gen")
+    @SequenceGenerator(name = "product_gen", sequenceName = "product_seq", allocationSize = 1)
     private Long productId;
     private String shopName;
     private String productName;

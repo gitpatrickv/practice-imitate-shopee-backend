@@ -6,5 +6,7 @@ public interface InventoryService {
 
 void addQuantity(QuantityRequest quantityRequest);
 
+void decreaseQuantity(QuantityRequest quantityRequest);
+
 
 }

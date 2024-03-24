@@ -19,12 +19,12 @@ public class InventoryController {
     public void addQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
         inventoryService.addQuantity(quantityRequest);
     }
-/*
-    @PostMapping("/decreaseQty")
+
+    @PostMapping("/quantity/decrease")
     @ResponseStatus(HttpStatus.OK)
-    public ColorVariationRequest decreaseQuantity(@RequestBody @Valid ColorVariationRequest colorVariationRequest){
-        return inventoryService.decreaseQuantity(colorVariationRequest);
+    public void decreaseQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
+        inventoryService.decreaseQuantity(quantityRequest);
     }
 
- */
+
 }

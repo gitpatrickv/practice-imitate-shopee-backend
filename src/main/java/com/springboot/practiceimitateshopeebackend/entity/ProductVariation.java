@@ -15,7 +15,8 @@ import java.util.List;
 public class ProductVariation extends AuditEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_variation_gen")
+    @SequenceGenerator(name = "product_variation_gen", sequenceName = "product_variation_seq", allocationSize = 1)
     private Long variationId;
 
     private String color;

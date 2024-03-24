@@ -15,7 +15,8 @@ import java.util.List;
 public class Inventory extends AuditEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventory_gen")
+    @SequenceGenerator(name = "inventory_gen", sequenceName = "inventory_seq", allocationSize = 1)
     private Long inventoryId;
     private Long quantity;
     private String productName;
