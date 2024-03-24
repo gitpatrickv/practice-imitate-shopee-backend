@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
 import com.springboot.practiceimitateshopeebackend.model.ColorVariationRequest;
+import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
 import com.springboot.practiceimitateshopeebackend.model.SaveRequest;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
 import jakarta.validation.Valid;
@@ -19,10 +20,10 @@ public class InventoryController {
     void addColorVariation(@RequestBody @Valid ColorVariationRequest colorVariationRequest){
         inventoryService.addColorVariation(colorVariationRequest);
     }
-    @PostMapping("/save")
+    @PostMapping("/quantity/add")
     @ResponseStatus(HttpStatus.OK)
-    public void save(@RequestBody @Valid SaveRequest saveRequest){
-         inventoryService.save(saveRequest);
+    public void addQuantity(@RequestBody @Valid QuantityRequest quantityRequest) {
+        inventoryService.addQuantity(quantityRequest);
     }
 /*
     @PostMapping("/decreaseQty")

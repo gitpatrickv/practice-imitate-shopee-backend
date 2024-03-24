@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
         if(!isNew) {
             product = mapper.mapProductModelToProductEntity(model);
-            product.setCreatedBy(username);
+            //product.setCreatedBy(username);
         } else {
             product = productRepository.findById(model.getProductId()).get();
             if (model.getShopName() != null) {
@@ -42,12 +42,12 @@ public class ProductServiceImpl implements ProductService {
             if (model.getProductName() != null) {
                 product.setProductName(model.getProductName());
             }
-            if (model.getPrice() != null) {
-                product.setPrice(model.getPrice());
-            }
+//            if (model.getPrice() != null) {
+//                product.setPrice(model.getPrice());
+//            }
             //this.updateCart(product);
             this.updateInventory(product);
-            product.setLastModifiedBy(username);
+            //product.setLastModifiedBy(username);
         }
         Product savedProduct = productRepository.save(product);
         return mapper.mapProductEntityToProductModel(savedProduct);

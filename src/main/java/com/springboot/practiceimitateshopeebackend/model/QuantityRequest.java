@@ -18,8 +18,11 @@ public class QuantityRequest {
     @NotNull(message = "{product.id.must.not.be.null}")
     private Long productId;
 
-    @NotNull(message = "{inventory.id.must.not.be.null}")
-    private Long inventoryId;
+    @NotNull(message = "{price.not.null}")
+    private Double price;
+
+    //@NotNull(message = "{inventory.id.must.not.be.null}")
+    //private Long inventoryId;
 
     @NotNull(message = "{quantity.not.null}")
     private Long quantity;

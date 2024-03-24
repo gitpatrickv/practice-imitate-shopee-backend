@@ -25,4 +25,5 @@ public class SizeColorVariation{
     private SizeVariation sizeVariation;
 
     private Long quantity;
+    private Double price;
 }

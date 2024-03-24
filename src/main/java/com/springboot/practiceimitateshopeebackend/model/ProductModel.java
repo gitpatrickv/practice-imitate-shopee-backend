@@ -22,7 +22,7 @@ public class ProductModel {
     private String shopName;
     @NotBlank(message = "{product.name.required}")
     private String productName;
-    @NotNull(message = "{price.not.null}")
-    private Double price;
+//    @NotNull(message = "{price.not.null}")
+//    private Double price;
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "inventory")
-public class Inventory extends AuditEntity{
+public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,8 @@ public class Inventory extends AuditEntity{
     private Long quantity;
     private String productName;
     private String shopName;
+    private Double price;
+    private String skuCode;
 
     @Enumerated(EnumType.STRING)
     private Color color;

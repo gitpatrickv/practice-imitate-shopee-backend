@@ -8,7 +8,7 @@ public interface InventoryService {
 
     void addColorVariation(ColorVariationRequest colorVariationRequest);
 
-    void save(SaveRequest saveRequest);
+    //void save(SaveRequest saveRequest);
 
     void addQuantity(QuantityRequest quantityRequest);
 
