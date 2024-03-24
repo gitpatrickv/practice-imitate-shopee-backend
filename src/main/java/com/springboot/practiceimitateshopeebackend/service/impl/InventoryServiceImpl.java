@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Inventory;
+import com.springboot.practiceimitateshopeebackend.model.PriceRequest;
 import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
@@ -40,6 +41,15 @@ public class InventoryServiceImpl implements InventoryService {
 
         Inventory inv = inventory.get();
         inv.setQuantity(inv.getQuantity() - quantityRequest.getQuantity());
+        inventoryRepository.save(inv);
+    }
+
+    @Override
+    public void updatePrice(PriceRequest priceRequest) {
+        Optional<Inventory> inventory = inventoryRepository.findById(priceRequest.getId());
+
+        Inventory inv = inventory.get();
+        inv.setPrice(priceRequest.getPrice());
         inventoryRepository.save(inv);
     }
 }
