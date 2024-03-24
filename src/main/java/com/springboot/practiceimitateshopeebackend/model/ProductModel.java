@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.model;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,10 @@ public class ProductModel {
     private String shopName;
     @NotBlank(message = "{product.name.required}")
     private String productName;
+    @NotNull(message = "{this.field.cannot.be.empty}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+    private Double price;
+    @NotNull(message = "{this.field.cannot.be.empty}")
+    private Long quantity;
 
 }

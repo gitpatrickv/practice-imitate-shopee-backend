@@ -9,8 +9,7 @@ import java.util.Optional;
 public interface ProductService {
 
     ProductModel saveProduct(ProductModel model);
-    void saveProductStocks(StockRequest stockRequest);
-    void saveProductVariationStocks(StockRequest stockRequest);
+
     List<ProductModel> searchProduct(String search);
     Optional<ProductModel> getOneById(Long id);
     void delete(Long id);

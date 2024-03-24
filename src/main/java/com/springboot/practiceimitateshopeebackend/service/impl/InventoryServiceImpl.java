@@ -1,15 +1,11 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Inventory;
-import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.entity.ProductVariation;
-import com.springboot.practiceimitateshopeebackend.model.StockRequest;
-
+import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductVariationRepository;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
-import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +24,16 @@ public class InventoryServiceImpl implements InventoryService {
     private final ProductVariationRepository productVariationRepository;
 
 
+    @Override
+    public void addQuantity(QuantityRequest quantityRequest) {
 
+        Optional<Inventory> inventory = inventoryRepository.findById(quantityRequest.getId());
 
-
-
+            Inventory inv = inventory.get();
+            inv.setQuantity(inv.getQuantity() + quantityRequest.getQuantity());
+            inventoryRepository.save(inv);
     }
+}
 
 
 
