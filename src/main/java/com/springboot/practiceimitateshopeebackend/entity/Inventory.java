@@ -15,7 +15,7 @@ import java.util.List;
 public class Inventory extends AuditEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long inventoryId;
     private Long quantity;
     private String productName;
@@ -34,7 +34,7 @@ public class Inventory extends AuditEntity{
     @JoinColumn(name = "product_variation_id")
     private ProductVariation productVariation;
 
-    @OneToMany(mappedBy = "inventory")
+    @OneToMany(mappedBy = "inventory",  cascade = CascadeType.ALL)
     private List<Cart> cart;
 
 

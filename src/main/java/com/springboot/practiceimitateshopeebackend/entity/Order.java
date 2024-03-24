@@ -15,7 +15,7 @@ import java.util.List;
 public class Order extends AuditEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderId;
 
     private String name;

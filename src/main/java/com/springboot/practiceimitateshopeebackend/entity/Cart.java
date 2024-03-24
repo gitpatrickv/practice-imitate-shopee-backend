@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "cart")
 public class Cart extends AuditEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long cartId;
     private Long quantity;
     private Double price;
