@@ -10,10 +10,8 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    void deleteAllByEmailAndShopName(String email, String shopName);
-
     List<Order> findAllByEmailAndShopName(String email, String shopName);
-
+    void deleteAllByEmailAndShopName(String email, String shopName);
 }
 
 

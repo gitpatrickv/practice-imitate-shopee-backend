@@ -14,21 +14,21 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends AuditEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_gen")
+    @SequenceGenerator(name = "product_gen", sequenceName = "product_seq", allocationSize = 1)
     private Long productId;
     private String shopName;
     private String productName;
-    private Double price;
+    private String productDescription;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Cart> cart;
+    private List<Inventory> inventory;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    private Inventory inventory;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductVariation> productVariation;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-
-
-    
 }

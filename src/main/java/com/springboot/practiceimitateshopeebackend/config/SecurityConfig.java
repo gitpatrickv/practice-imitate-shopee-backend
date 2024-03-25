@@ -39,6 +39,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/transactions/**").authenticated()
                             .requestMatchers("/api/product/**").permitAll()
                             .requestMatchers("/api/user/**").permitAll()
+                            .requestMatchers("/api/variation/**").authenticated()
                             .anyRequest().authenticated()
                 );
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
