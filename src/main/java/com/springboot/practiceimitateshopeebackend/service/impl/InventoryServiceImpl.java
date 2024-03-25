@@ -1,8 +1,10 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
+import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.model.PriceRequest;
 import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
+import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductVariationRepository;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,8 +24,7 @@ import java.util.Optional;
 public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
-    private final ProductRepository productRepository;
-    private final ProductVariationRepository productVariationRepository;
+    private final CartRepository cartRepository;
 
 
     @Override
@@ -51,6 +53,15 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory inv = inventory.get();
         inv.setPrice(priceRequest.getPrice());
         inventoryRepository.save(inv);
+
+        List<Cart> carts = inv.getCart();
+        if(carts != null){
+            for(Cart cart : carts){
+                cart.setPrice(inv.getPrice());
+                cart.setTotalAmount(cart.getQuantity() * inv.getPrice());
+                cartRepository.save(cart);
+            }
+        }
     }
 }
 
