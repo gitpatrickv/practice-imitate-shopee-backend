@@ -46,9 +46,9 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
-        //transaction.setProductId(order.getProductId());
+        transaction.setInventoryId(order.getInventoryId());
         transaction.setOrderStatus(StringUtils.ORDER_CANCELLED);
-        transaction.setCreatedBy(order.getCreatedBy());
+        transaction.setUser(order.getUser());
 
         transactionRepository.save(transaction);
     }
@@ -61,9 +61,9 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
-        //transaction.setProductId(order.getProductId());
+        transaction.setInventoryId(order.getInventoryId());
         transaction.setOrderStatus(StringUtils.ORDER_DELIVERED);
-        transaction.setCreatedBy(order.getCreatedBy());
+        transaction.setUser(order.getUser());
 
         transactionRepository.save(transaction);
 

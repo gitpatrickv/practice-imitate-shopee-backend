@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByEmailAndShopName(String email, String shopName);
+    void deleteAllByEmailAndShopName(String email, String shopName);
 }
 
 

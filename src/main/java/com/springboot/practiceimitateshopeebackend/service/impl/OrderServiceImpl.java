@@ -61,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     @Override
     public void cancelOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
@@ -70,16 +69,22 @@ public class OrderServiceImpl implements OrderService {
 
         for(Order orders : order){
             transactionService.saveCancelledOrder(orders);
-
+            this.updateQuantityAfterOrderCancellation(orders);
         }
+        orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
 
     @Override
     public void completeOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
+        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
 
-
+        for(Order orders : order){
+            transactionService.saveCompletedOrder(orders);
+        }
+        orderRepository.deleteAllByEmailAndShopName(username, shopName);
     }
+
 
     private void orderDetails(Cart cart){
 
@@ -113,8 +118,9 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void updateQuantityAfterCancelledOrder(Order order){
-
+    private void updateQuantityAfterOrderCancellation(Order order){
+        Optional<Inventory> inventory = inventoryRepository.findById(order.getInventoryId());
+        inventory.get().setQuantity(inventory.get().getQuantity() + order.getQuantity());
     }
 
 }
