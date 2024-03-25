@@ -8,6 +8,10 @@ import java.util.List;
 public interface CartService {
 
     void addToCart(CartRequest cartRequest);
+    void increaseQuantity(Long id);
+    void decreaseQuantity(Long id);
+    void filterCart(Long id);
     List<CartModel> cartList();
+    public void deleteProductsInCart(Long id);
 
 }
