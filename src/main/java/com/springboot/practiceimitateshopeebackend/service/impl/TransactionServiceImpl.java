@@ -24,7 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.findAll().stream()
                 .filter(filter ->
                         filter.getCreatedBy().equals(username) &&
-                                filter.getOrderStatus().equals("CANCELLED"))
+                                filter.getOrderStatus().equals(StringUtils.ORDER_CANCELLED))
                 .toList();
     }
 
@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.findAll().stream()
                 .filter(filter ->
                         filter.getCreatedBy().equals(username) &&
-                                filter.getOrderStatus().equals("DELIVERED"))
+                                filter.getOrderStatus().equals(StringUtils.ORDER_DELIVERED))
                 .toList();
     }
 
@@ -46,7 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
-        transaction.setProductId(order.getProductId());
+        //transaction.setProductId(order.getProductId());
         transaction.setOrderStatus(StringUtils.ORDER_CANCELLED);
         transaction.setCreatedBy(order.getCreatedBy());
 
@@ -61,7 +61,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPrice(order.getPrice());
         transaction.setTotalAmount(order.getTotalAmount());
         transaction.setQuantity(order.getQuantity());
-        transaction.setProductId(order.getProductId());
+        //transaction.setProductId(order.getProductId());
         transaction.setOrderStatus(StringUtils.ORDER_DELIVERED);
         transaction.setCreatedBy(order.getCreatedBy());
 

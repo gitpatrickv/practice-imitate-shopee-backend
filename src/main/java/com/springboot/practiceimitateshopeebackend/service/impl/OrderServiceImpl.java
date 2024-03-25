@@ -1,11 +1,13 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
+import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
 import com.springboot.practiceimitateshopeebackend.model.OrderModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
+import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.OrderRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
@@ -30,8 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
     private final CartMapper mapper;
+    private final InventoryRepository inventoryRepository;
     private final OrderMapper orderMapper;
     private final TransactionServiceImpl transactionService;
 
@@ -49,19 +51,69 @@ public class OrderServiceImpl implements OrderService {
     public void placeOrder() {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
+        List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmail(username);
 
+        for(Cart carts : cart){
+            this.orderDetails(carts);
+            this.updateQuantity(carts);
+        }
+        cartRepository.deleteAllByFilterTrueAndUserEmail(username);
     }
+
 
 
     @Override
     public void cancelOrder(String shopName) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
 
+        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
+
+        for(Order orders : order){
+            transactionService.saveCancelledOrder(orders);
+
+        }
     }
 
     @Override
     public void completeOrder(String shopName) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
 
+
+    }
+
+    private void orderDetails(Cart cart){
+
+        Order order = new Order();
+        order.setName(cart.getUser().getName());
+        order.setAddress(cart.getUser().getAddress());
+        order.setEmail(cart.getUser().getEmail());
+        order.setContactNumber(cart.getUser().getContactNumber());
+        order.setPrice(cart.getPrice());
+        order.setTotalAmount(cart.getTotalAmount());
+        order.setShopName(cart.getShopName());
+        order.setProductName(cart.getProductName());
+        order.setQuantity(cart.getQuantity());
+        order.setColor(cart.getColor());
+        order.setSize(cart.getSize());
+        order.setCreatedBy(cart.getCreatedBy());
+        order.setPaymentMethod(StringUtils.CASH_ON_DELIVERY);
+        order.setOrderStatus(StringUtils.PROCESSING);
+        order.setUser(cart.getUser());
+        order.setInventoryId(cart.getInventory().getInventoryId());
+        orderRepository.save(order);
+    }
+
+    private void updateQuantity(Cart cart){
+        Optional<Inventory> inventory = inventoryRepository.findById(cart.getInventory().getInventoryId());
+
+        if(cart.getQuantity() > inventory.get().getQuantity()){
+            throw new IllegalArgumentException(StringUtils.OUT_OF_STOCK);
+        }else{
+            inventory.get().setQuantity(inventory.get().getQuantity() - cart.getQuantity());
+        }
+    }
+
+    private void updateQuantityAfterCancelledOrder(Order order){
 
     }
 

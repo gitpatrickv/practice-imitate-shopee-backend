@@ -26,6 +26,9 @@ public class Cart extends AuditEntity{
     private String size;
     private boolean filter;
 
+    @OneToMany(mappedBy = "cart")
+    private List<Order> order;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,8 +36,5 @@ public class Cart extends AuditEntity{
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-
-    @OneToMany(mappedBy = "cart")
-    private List<Order> order;
 
 }

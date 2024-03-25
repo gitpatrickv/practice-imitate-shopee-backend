@@ -29,8 +29,10 @@ public class Order extends AuditEntity{
     private String shopName;
     private String productName;
     private Long quantity;
+    private String color;
+    private String size;
 
-    private Long productId;
+    private Long inventoryId;
 
     private String paymentMethod;
     private String orderStatus;
@@ -45,6 +47,5 @@ public class Order extends AuditEntity{
 
     @OneToMany(mappedBy = "order")
     private List<Transaction> transaction;
-
 
 }
