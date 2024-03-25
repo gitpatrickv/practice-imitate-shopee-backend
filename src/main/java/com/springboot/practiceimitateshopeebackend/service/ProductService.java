@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface ProductService {
 
     ProductModel saveProduct(ProductModel model);
-
     List<ProductModel> searchProduct(String search);
     Optional<ProductModel> getOneById(Long id);
     void delete(Long id);
