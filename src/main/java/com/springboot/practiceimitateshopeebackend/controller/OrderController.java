@@ -26,11 +26,13 @@ public class OrderController {
     public List<CartModel> checkout(){
         return orderService.checkout();
     }
+
     @GetMapping("/cancel/{store}")
     @ResponseStatus(HttpStatus.OK)
     public void cancelOrder(@PathVariable("store") String shopName){
         orderService.cancelOrder(shopName);
     }
+
     @GetMapping("/complete/{store}")
     @ResponseStatus(HttpStatus.OK)
     public void completeOrder(@PathVariable("store")String shopName){

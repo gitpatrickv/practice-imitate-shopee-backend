@@ -16,5 +16,7 @@ public class StringUtils {
     public static final String ORDER_CANCELLED = "CANCELLED";
     public static final String ORDER_DELIVERED = "DELIVERED";
     public static final String PRODUCT_NOT_FOUND = "PRODUCT NOT FOUND!";
+    public static final String PRODUCT_VARIATION_ALREADY_EXISTS = "PRODUCT VARIATION ALREADY EXISTS!";
+    public static final String PRODUCT_ALREADY_EXISTS = "PRODUCT ALREADY EXISTS!";
 
 }

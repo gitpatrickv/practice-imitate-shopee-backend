@@ -23,6 +23,7 @@ public class CartController {
     public List<CartModel> cartList(){
         return cartService.cartList();
     }
+
     @GetMapping("/addCart")
     @ResponseStatus(HttpStatus.OK)
     public void addToCart(@RequestBody @Valid CartRequest cartRequest){
@@ -49,8 +50,15 @@ public class CartController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProductsInCart(@PathVariable Long id){
-        cartService.deleteProductsInCart(id);
+    public void deleteOneProductInCart(@PathVariable Long id){
+        cartService.deleteOneProductInCart(id);
     }
+
+    @DeleteMapping("/delete/all")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllProductsInCart(){
+        cartService.deleteAllProductsInCart();
+    }
+
 
 }

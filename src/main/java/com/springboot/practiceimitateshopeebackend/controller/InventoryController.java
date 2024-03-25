@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.controller;
 
+import com.springboot.practiceimitateshopeebackend.model.PriceRequest;
 import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
 import jakarta.validation.Valid;
@@ -13,15 +14,23 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
 
     private final InventoryService inventoryService;
-    @PostMapping("/addQuantity")
+
+    @PostMapping("/quantity/add")
     @ResponseStatus(HttpStatus.OK)
-    QuantityRequest addQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
-        return inventoryService.addQuantity(quantityRequest);
+    public void addQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
+        inventoryService.addQuantity(quantityRequest);
     }
 
-    @PostMapping("/decreaseQty")
+    @PostMapping("/quantity/decrease")
     @ResponseStatus(HttpStatus.OK)
-    public QuantityRequest decreaseQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
-        return inventoryService.decreaseQuantity(quantityRequest);
+    public void decreaseQuantity(@RequestBody @Valid QuantityRequest quantityRequest){
+        inventoryService.decreaseQuantity(quantityRequest);
     }
+    @PostMapping("/update/price")
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePrice(@RequestBody @Valid PriceRequest priceRequest) {
+        inventoryService.updatePrice(priceRequest);
+    }
+
+
 }

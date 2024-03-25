@@ -12,8 +12,6 @@ public class PracticeImitateShopeeBackendApplication {
 		SpringApplication.run(PracticeImitateShopeeBackendApplication.class, args);
 	}
 
-
-
 	//todo select payment methods
 	//todo kafka to handle all events
 	//todo validation
@@ -21,5 +19,5 @@ public class PracticeImitateShopeeBackendApplication {
 
 	//todo flyway practice
 
-	//todo order status = COMPLETED CANCELLED PENDING PROCESSING, OUT FOR DELIVERY make a method for changing order status?
+	//todo users can generate their own sku code
 }
