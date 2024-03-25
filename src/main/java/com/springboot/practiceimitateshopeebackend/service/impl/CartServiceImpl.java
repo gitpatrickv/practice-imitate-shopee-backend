@@ -132,9 +132,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void deleteProductsInCart(Long id) {
+    public void deleteOneProductInCart(Long id) {
         String username = JwtAuthenticationFilter.CURRENT_USER;
         cartRepository.deleteByInventory_InventoryIdAndUserEmail(id,username);
+    }
+
+    @Override
+    public void deleteAllProductsInCart() {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        cartRepository.deleteAllByUserEmail(username);
     }
 
 

@@ -12,6 +12,7 @@ public interface CartService {
     void decreaseQuantity(Long id);
     void filterCart(Long id);
     List<CartModel> cartList();
-    public void deleteProductsInCart(Long id);
+    void deleteOneProductInCart(Long id);
+    void deleteAllProductsInCart();
 
 }
