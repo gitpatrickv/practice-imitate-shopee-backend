@@ -23,6 +23,9 @@ public class ProductModel {
     private String shopName;
     @NotBlank(message = "{product.name.required}")
     private String productName;
+    @NotBlank(message = "{this.field.cannot.be.empty}")
+    private String productDescription;
+
     @NotNull(message = "{this.field.cannot.be.empty}")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private Double price;

@@ -19,6 +19,7 @@ public class Product extends AuditEntity{
     private Long productId;
     private String shopName;
     private String productName;
+    private String productDescription;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Inventory> inventory;
@@ -26,8 +27,8 @@ public class Product extends AuditEntity{
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductVariation> productVariation;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

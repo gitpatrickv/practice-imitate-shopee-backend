@@ -23,6 +23,7 @@ public class Transaction extends AuditEntity{
     private Long quantity;
     private String orderStatus;
     private Long inventoryId;
+    private String paymentMethod;
     private String size;
     private String color;
 

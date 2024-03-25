@@ -25,6 +25,7 @@ public class Inventory extends AuditEntity{
     private String skuCode;
     private String color;
     private String size;
+    private String productDescription;
 
 
     @ManyToOne
