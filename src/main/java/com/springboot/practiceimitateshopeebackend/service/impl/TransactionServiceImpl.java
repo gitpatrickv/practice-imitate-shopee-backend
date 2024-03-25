@@ -68,6 +68,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setColor(order.getColor());
         transaction.setUser(order.getUser());
         transaction.setOrderStatus(StringUtils.ORDER_DELIVERED);
+        transaction.setPaymentMethod(StringUtils.CASH_ON_DELIVERY);
 
         transactionRepository.save(transaction);
 
