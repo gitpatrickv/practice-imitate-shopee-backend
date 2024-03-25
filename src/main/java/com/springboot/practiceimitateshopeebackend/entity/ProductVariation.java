@@ -22,7 +22,7 @@ public class ProductVariation extends AuditEntity{
     private String color;
     private String size;
 
-    @OneToMany(mappedBy = "productVariation")
+    @OneToMany(mappedBy = "productVariation", cascade = CascadeType.ALL)
     private List<Inventory> inventory;
 
     @ManyToOne

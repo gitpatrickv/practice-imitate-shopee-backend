@@ -19,5 +19,10 @@ public class ProductVariationController {
     public void addVariation(@RequestBody @Valid ProductVariationRequest request){
         productVariationService.addVariation(request);
     }
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProductVariation(@PathVariable Long id){
+        productVariationService.deleteProductVariation(id);
+    }
 
 }

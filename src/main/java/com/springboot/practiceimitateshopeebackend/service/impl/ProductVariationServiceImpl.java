@@ -57,4 +57,9 @@ public class ProductVariationServiceImpl implements ProductVariationService {
         }
     }
 
+    @Override
+    public void deleteProductVariation(Long id) {
+        productVariationRepository.deleteById(id);
+    }
+
 }

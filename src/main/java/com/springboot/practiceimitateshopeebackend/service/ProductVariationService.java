@@ -6,4 +6,5 @@ public interface ProductVariationService {
 
     void addVariation(ProductVariationRequest request);
 
+    void deleteProductVariation(Long id);
 }
