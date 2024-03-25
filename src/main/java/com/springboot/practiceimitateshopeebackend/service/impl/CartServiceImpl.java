@@ -1,6 +1,7 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
+import com.springboot.practiceimitateshopeebackend.model.CartRequest;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
@@ -27,6 +28,10 @@ public class CartServiceImpl implements CartService {
     private final CartMapper mapper;
     private final InventoryRepository inventoryRepository;
 
+    @Override
+    public void addToCart(CartRequest cartRequest) {
+
+    }
 
     @Override
     public List<CartModel> cartList() {
