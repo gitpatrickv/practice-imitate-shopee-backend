@@ -22,6 +22,8 @@ public class Cart extends AuditEntity{
     private Double totalAmount;
     private String shopName;
     private String productName;
+    private String color;
+    private String size;
     private boolean filter;
 
     @ManyToOne

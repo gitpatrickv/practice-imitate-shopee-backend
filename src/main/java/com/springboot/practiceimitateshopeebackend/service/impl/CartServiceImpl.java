@@ -42,15 +42,19 @@ public class CartServiceImpl implements CartService {
 
         if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
             Cart cart = existingCart.get();
-            if(cart.getQuantity() < inventory.get().getQuantity()){
+            if(cart.getQuantity() < inventory.get().getQuantity() &&
+                    cartRequest.getQuantity() < inventory.get().getQuantity()){
+
                 cart.setQuantity(cart.getQuantity() + cartRequest.getQuantity());
                 cart.setTotalAmount(cart.getQuantity() * inventory.get().getPrice());
                 cartRepository.save(cart);
-            }else{
+            } else{
                 log.info(StringUtils.OUT_OF_STOCK);
             }
-        }else{
+        }
+        else{
             Cart cart = new Cart();
+
             if(cartRequest.getQuantity() > inventory.get().getQuantity()){
                 log.info(StringUtils.OUT_OF_STOCK);
             }else{
@@ -59,6 +63,8 @@ public class CartServiceImpl implements CartService {
                 cart.setPrice(inventory.get().getPrice());
                 cart.setShopName(inventory.get().getShopName());
                 cart.setProductName(inventory.get().getProductName());
+                cart.setColor(inventory.get().getColor());
+                cart.setSize(inventory.get().getSize());
                 cart.setTotalAmount(inventory.get().getPrice() * cartRequest.getQuantity());
                 cart.setUser(user.get());
                 cartRepository.save(cart);
@@ -68,12 +74,40 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void increaseQuantity(Long id) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<Inventory> inventory = inventoryRepository.findById(id);
+        Optional<Cart> existingCart = cartRepository.findByInventory_InventoryIdAndUserEmail(id, username);
 
+        if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
+            Cart cart = existingCart.get();
+
+            if(cart.getQuantity() < inventory.get().getQuantity()){
+                cart.setQuantity(existingCart.get().getQuantity() + 1);
+                cart.setTotalAmount(existingCart.get().getQuantity() * inventory.get().getPrice());
+                cartRepository.save(cart);
+            }else{
+                log.info(StringUtils.OUT_OF_STOCK);
+            }
+        }
     }
 
     @Override
     public void decreaseQuantity(Long id) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<Inventory> inventory = inventoryRepository.findById(id);
+        Optional<Cart> existingCart = cartRepository.findByInventory_InventoryIdAndUserEmail(id, username);
 
+        if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)) {
+            Cart cart = existingCart.get();
+
+            if(cart.getQuantity() > 1){
+                cart.setQuantity(existingCart.get().getQuantity() - 1);
+                cart.setTotalAmount(existingCart.get().getQuantity() * inventory.get().getPrice());
+                cartRepository.save(cart);
+            }else{
+                cartRepository.deleteByInventory_InventoryIdAndUserEmail(id,username);
+            }
+        }
     }
 
     @Override

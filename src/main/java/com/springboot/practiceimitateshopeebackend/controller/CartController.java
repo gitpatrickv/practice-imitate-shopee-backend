@@ -29,7 +29,7 @@ public class CartController {
     public void addToCart(@RequestBody @Valid CartRequest cartRequest){
         cartService.addToCart(cartRequest);
     }
-/*
+
     @PutMapping("increase/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void increaseQuantity(@PathVariable Long id) {
@@ -41,7 +41,7 @@ public class CartController {
     public void decreaseQuantity(@PathVariable Long id) {
         cartService.decreaseQuantity(id);
     }
-
+/*
     @PutMapping("filter/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void filterCart(@PathVariable Long id){
