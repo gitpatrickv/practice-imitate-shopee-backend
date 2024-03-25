@@ -1,71 +1,82 @@
 package com.springboot.practiceimitateshopeebackend.service.impl;
 
+import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.entity.Product;
-import com.springboot.practiceimitateshopeebackend.mapper.ProductMapper;
 import com.springboot.practiceimitateshopeebackend.model.ProductModel;
+import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
+import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.ProductService;
-import lombok.RequiredArgsConstructor;
+import com.springboot.practiceimitateshopeebackend.utils.mapper.ProductMapper;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
+    private final CartRepository cartRepository;
     private final ProductMapper mapper;
 
     @Override
     public ProductModel saveProduct(ProductModel model) {
+        boolean isNew = productRepository.existsById(model.getProductId());
+        Product product;
+        String username = JwtAuthenticationFilter.CURRENT_USER;
 
-        boolean isNew = true;
+        if(!isNew) {
+            product = mapper.mapProductModelToProductEntity(model);
+            product.setCreatedBy(username);
+        } else {
+            product = productRepository.findById(model.getProductId()).get();
+            if (model.getShopName() != null) {
+                product.setShopName(model.getShopName());
+            }
+            if (model.getProductName() != null) {
+                product.setProductName(model.getProductName());
+            }
+            if (model.getPrice() != null) {
+                product.setPrice(model.getPrice());
+            }
+            this.updateCart(product);
+            product.setLastModifiedBy(username);
+        }
+        Product savedProduct = productRepository.save(product);
+        return mapper.mapProductEntityToProductModel(savedProduct);
+    }
 
-        if(!isNew){
-            ProductModel update = this.getOneById(model.getProductId()).get();
-
-            if(model.getShopName() != null){
-                update.setShopName(model.getShopName());
-            }
-            if(model.getProductName() != null){
-                update.setProductName(model.getProductName());
-            }
-            if(model.getProductAmount() != null){
-                update.setProductAmount(model.getProductAmount());
-            }
-            if(model.getQuantity() != null){
-                update.setQuantity(model.getQuantity());
+    private void updateCart(Product product) {
+        List<Cart> carts = product.getCart();
+        if (carts != null) {
+            for (Cart cart : carts) {
+                cart.setProductName(product.getProductName());
+                cart.setShopName(product.getShopName());
+                cart.setPrice(product.getPrice());
+                cart.setTotalAmount(cart.getQuantity() * product.getPrice());
+                cartRepository.save(cart);
             }
         }
-
-        Product product = mapper.mapProductModelToProductEntity(model);
-        Product saveProduct = productRepository.save(product);
-        return mapper.mapProductEntityToProductModel(saveProduct);
-
     }
+
     @Override
-    public List<Product> getAll(String search) {
-        return productRepository.findAll()
+    public List<ProductModel> searchProduct(String search) {
+        return productRepository.findByProductNameContainingIgnoreCaseOrShopNameContainingIgnoreCase(search, search)
                 .stream()
-                .filter(keyword ->
-                        keyword.getShopName().equalsIgnoreCase(search) ||
-                                keyword.getProductName().equalsIgnoreCase(search))
+                .map(mapper::mapProductEntityToProductModel)
                 .toList();
-
     }
-
     @Override
     public Optional<ProductModel> getOneById(Long id) {
         return productRepository.findById(id).map(mapper::mapProductEntityToProductModel);
     }
-
     @Override
     public void delete(Long id) {
-       productRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
-
-
 }
