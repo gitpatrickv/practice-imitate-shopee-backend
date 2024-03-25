@@ -112,7 +112,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void filterCart(Long id) {
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        Optional<Cart> existingCart = cartRepository.findByInventory_InventoryIdAndUserEmail(id, username);
+        Cart cart = existingCart.get();
 
+        if(existingCart.isPresent() && existingCart.get().getCreatedBy().equals(username)){
+            cart.setFilter(!cart.isFilter());
+        }
     }
 
     @Override
@@ -127,7 +133,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void deleteProductsInCart(Long id) {
-
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        cartRepository.deleteByInventory_InventoryIdAndUserEmail(id,username);
     }
 
 

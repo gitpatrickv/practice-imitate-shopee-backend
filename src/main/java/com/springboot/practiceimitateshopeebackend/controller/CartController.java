@@ -41,7 +41,7 @@ public class CartController {
     public void decreaseQuantity(@PathVariable Long id) {
         cartService.decreaseQuantity(id);
     }
-/*
+
     @PutMapping("filter/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void filterCart(@PathVariable Long id){
@@ -55,5 +55,4 @@ public class CartController {
     }
 
 
-     */
 }
