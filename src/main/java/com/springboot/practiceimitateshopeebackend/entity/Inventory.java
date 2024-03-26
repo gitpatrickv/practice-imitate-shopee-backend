@@ -37,12 +37,7 @@ public class Inventory extends AuditEntity{
     @OneToMany(mappedBy = "inventory",  cascade = CascadeType.ALL)
     private List<Cart> cart;
 
-
-
-
-
-
-
-
+    @OneToMany(mappedBy = "inventory",  cascade = CascadeType.ALL)
+    private List<ProductImage> productImage;
 
 }
