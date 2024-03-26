@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    Optional<Cart> findByProduct_ProductIdAndUserEmail(Long id, String email);
-    void deleteByProduct_ProductIdAndUserEmail(Long id, String email);
-    Optional<Cart> findByFilterTrueAndUserEmailAndCreatedBy(String email, String user);
-    List<Cart> findAllByFilterTrueAndUserEmail(String email);
+    Optional<Cart> findByInventory_InventoryIdAndUserEmail(Long id, String email);
+    void deleteByInventory_InventoryIdAndUserEmail(Long id, String email);
+    void deleteAllByUserEmail(String email);
     void deleteAllByFilterTrueAndUserEmail(String email);
+    List<Cart> findAllByFilterTrueAndUserEmail(String email);
 
 }

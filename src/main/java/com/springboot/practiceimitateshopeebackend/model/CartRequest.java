@@ -15,8 +15,8 @@ public class CartRequest {
 
    @Valid
 
-   @NotNull(message = "{product.id.must.not.be.null}")
-   private Long productId;
+   @NotNull(message = "{inventory.id.must.not.be.null}")
+   private Long id;
    @NotNull(message = "{quantity.not.null}")
    private Long quantity;
 
