@@ -3,13 +3,10 @@ package com.springboot.practiceimitateshopeebackend.service.impl;
 import com.springboot.practiceimitateshopeebackend.entity.Cart;
 import com.springboot.practiceimitateshopeebackend.entity.Inventory;
 import com.springboot.practiceimitateshopeebackend.entity.Order;
-import com.springboot.practiceimitateshopeebackend.entity.Product;
 import com.springboot.practiceimitateshopeebackend.model.CartModel;
-import com.springboot.practiceimitateshopeebackend.model.OrderModel;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
 import com.springboot.practiceimitateshopeebackend.repository.OrderRepository;
-import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
 import com.springboot.practiceimitateshopeebackend.service.OrderService;
 import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
@@ -20,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,15 +49,10 @@ public class OrderServiceImpl implements OrderService {
 
         List<Cart> cart = cartRepository.findAllByFilterTrueAndUserEmail(username);
 
-<<<<<<<<< Temporary merge branch 1
-        for (Cart carts : cart) {
-=========
         for(Cart carts : cart){
->>>>>>>>> Temporary merge branch 2
             this.orderDetails(carts);
             this.updateQuantity(carts);
         }
-
         cartRepository.deleteAllByFilterTrueAndUserEmail(username);
     }
 
@@ -123,41 +114,8 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-<<<<<<<<< Temporary merge branch 1
-    @Override
-    public void cancelOrder(String shopName) {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
-
-        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
-
-        for (Order orders : order) {
-            transactionService.saveCancelledOrder(orders);
-            this.updateQuantityAfterCancel(orders);
-        }
-        orderRepository.deleteAllByEmailAndShopName(username, shopName);
-    }
-
-    private void updateQuantityAfterCancel(Order order){
-        Optional<Product> product = productRepository.findById(order.getProductId());
-        product.get().getInventory().setQuantity(product.get().getInventory().getQuantity() + order.getQuantity());
-    }
-
-    @Override
-    public void completeOrder(String shopName) {
-        String username = JwtAuthenticationFilter.CURRENT_USER;
-
-        List<Order> order = orderRepository.findAllByEmailAndShopName(username, shopName);
-
-        for (Order orders : order) {
-            transactionService.saveCompletedOrder(orders);
-        }
-
-        orderRepository.deleteAllByEmailAndShopName(username, shopName);
-=========
     private void updateQuantityAfterOrderCancellation(Order order){
         Optional<Inventory> inventory = inventoryRepository.findById(order.getInventoryId());
         inventory.get().setQuantity(inventory.get().getQuantity() + order.getQuantity());
->>>>>>>>> Temporary merge branch 2
     }
-
 }
