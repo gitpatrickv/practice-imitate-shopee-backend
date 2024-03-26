@@ -10,6 +10,7 @@ import com.springboot.practiceimitateshopeebackend.repository.InventoryRepositor
 import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
 import com.springboot.practiceimitateshopeebackend.repository.UserRepository;
 import com.springboot.practiceimitateshopeebackend.security.JwtAuthenticationFilter;
+import com.springboot.practiceimitateshopeebackend.utils.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class CartServiceImplTest {
-/*
+
     @InjectMocks
     private CartServiceImpl cartService;
 
@@ -47,85 +48,83 @@ class CartServiceImplTest {
     public void addQuantityIfProductAlreadyExistsInTheCartTest(){
 
         CartRequest cartRequest = new CartRequest();
-        cartRequest.setProductId(1L);
-        cartRequest.setQuantity(1L);
+        cartRequest.setId(1L);
+        cartRequest.setQuantity(6L);
 
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
         Inventory inventory = new Inventory();
+        inventory.setInventoryId(1L);
+        inventory.setPrice(100.0);
         inventory.setQuantity(10L);
-
-        Product product = new Product();
-        product.setPrice(100.0);
-        product.setProductId(1L);
-        product.setInventory(inventory);
 
         Cart existingCart = new Cart();
         existingCart.setCreatedBy(user.getEmail());
-        existingCart.setProduct(product);
-        existingCart.setQuantity(3L);
+        existingCart.setInventory(inventory);
+        existingCart.setQuantity(4L);
 
         when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
-        when(productRepository.findById(cartRequest.getProductId())).thenReturn(Optional.of(product));
-        when(cartRepository.findByProduct_ProductIdAndUserEmail(cartRequest.getProductId(), user.getEmail())).thenReturn(Optional.of(existingCart));
+        when(inventoryRepository.findById(cartRequest.getId())).thenReturn(Optional.of(inventory));
+        when(cartRepository.findByInventory_InventoryIdAndUserEmail(cartRequest.getId(), user.getEmail())).thenReturn(Optional.of(existingCart));
 
         cartService.addToCart(cartRequest);
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(inventory.getQuantity());
-        Assertions.assertThat(existingCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
-        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(4L);
-        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(400);
-        Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
-        Assertions.assertThat(existingCart.getLastModifiedBy()).isEqualTo(user.getEmail());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThanOrEqualTo(inventory.getQuantity());
+        Assertions.assertThat(existingCart.getInventory().getInventoryId()).isEqualTo(cartRequest.getId());
+        Assertions.assertThat(inventory.getQuantity()).isEqualTo(10L);
+        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(10L);
+        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(1000);
+
     }
     @Test
     public void addNewProductToCartIfProductDoesntExistsInTheCart(){
 
         CartRequest cartRequest = new CartRequest();
-        cartRequest.setProductId(1L);
-        cartRequest.setQuantity(1L);
+        cartRequest.setId(1L);
+        cartRequest.setQuantity(6L);
 
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
         Inventory inventory = new Inventory();
+        inventory.setInventoryId(1L);
         inventory.setQuantity(10L);
-
-        Product product = new Product();
-        product.setPrice(100.0);
-        product.setProductId(1L);
-        product.setInventory(inventory);
-        product.setShopName("SHOP");
-        product.setProductName("PRODUCT NAME");
+        inventory.setPrice(100.0);
+        inventory.setShopName("SHOP NAME");
+        inventory.setProductName("PRODUCT NAME");
+        inventory.setColor("BLUE");
+        inventory.setSize("MEDIUM");
 
         Cart newCart = new Cart();
-        newCart.setProduct(product);
         newCart.setQuantity(cartRequest.getQuantity());
-        newCart.setTotalAmount(product.getPrice() * cartRequest.getQuantity());
-        newCart.setShopName(product.getShopName());
-        newCart.setProductName(product.getProductName());
+        newCart.setPrice(inventory.getPrice());
+        newCart.setTotalAmount(inventory.getPrice() * cartRequest.getQuantity());
+        newCart.setShopName(inventory.getShopName());
+        newCart.setProductName(inventory.getProductName());
+        newCart.setColor(inventory.getColor());
+        newCart.setSize(inventory.getSize());
         newCart.setUser(user);
-        newCart.setCreatedBy(user.getEmail());
 
         when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
-        when(productRepository.findById(cartRequest.getProductId())).thenReturn(Optional.of(product));
+        when(inventoryRepository.findById(cartRequest.getId())).thenReturn(Optional.of(inventory));
 
         cartService.addToCart(cartRequest);
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(newCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
-        Assertions.assertThat(newCart.getProduct().getProductId()).isEqualTo(cartRequest.getProductId());
-        Assertions.assertThat(newCart.getShopName()).isEqualTo(product.getShopName());
-        Assertions.assertThat(newCart.getProductName()).isEqualTo(product.getProductName());
+        Assertions.assertThat(newCart.getQuantity()).isLessThanOrEqualTo(inventory.getQuantity());
+        Assertions.assertThat(newCart.getShopName()).isEqualTo(inventory.getShopName());
+        Assertions.assertThat(newCart.getProductName()).isEqualTo(inventory.getProductName());
+        Assertions.assertThat(newCart.getPrice()).isEqualTo(inventory.getPrice());
         Assertions.assertThat(newCart.getQuantity()).isEqualTo(cartRequest.getQuantity());
-        Assertions.assertThat(newCart.getTotalAmount()).isEqualTo(100);
+        Assertions.assertThat(newCart.getTotalAmount()).isEqualTo(600);
+        Assertions.assertThat(newCart.getSize()).isEqualTo("MEDIUM");
+        Assertions.assertThat(newCart.getColor()).isEqualTo("BLUE");
         Assertions.assertThat(newCart.getUser()).isEqualTo(user);
-        Assertions.assertThat(newCart.getCreatedBy()).isEqualTo(user.getEmail());
-        Assertions.assertThat(newCart.getLastModifiedBy()).isEqualTo(null);
+
 
     }
 
@@ -138,30 +137,27 @@ class CartServiceImplTest {
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
         Inventory inventory = new Inventory();
+        inventory.setInventoryId(1L);
         inventory.setQuantity(10L);
-
-        Product product = new Product();
-        product.setPrice(100.0);
-        product.setProductId(1L);
-        product.setInventory(inventory);
+        inventory.setPrice(100.0);
 
         Cart existingCart = new Cart();
-        existingCart.setCreatedBy(user.getEmail());
-        existingCart.setProduct(product);
-        existingCart.setQuantity(3L);
+        existingCart.setInventory(inventory);
+        existingCart.setCreatedBy(JwtAuthenticationFilter.CURRENT_USER);
+        existingCart.setQuantity(9L);
 
         when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
-        when(productRepository.findById(id)).thenReturn(Optional.of(product));
-        when(cartRepository.findByProduct_ProductIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
+        when(inventoryRepository.findById(id)).thenReturn(Optional.of(inventory));
+        when(cartRepository.findByInventory_InventoryIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
 
         cartService.increaseQuantity(id);
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThanOrEqualTo(inventory.getQuantity());
         Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
-        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(4L);
-        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(400);
+        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(10L);
+        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(1000);
 
     }
 
@@ -174,30 +170,27 @@ class CartServiceImplTest {
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
         Inventory inventory = new Inventory();
+        inventory.setInventoryId(1L);
         inventory.setQuantity(10L);
-
-        Product product = new Product();
-        product.setPrice(100.0);
-        product.setProductId(1L);
-        product.setInventory(inventory);
+        inventory.setPrice(100.0);
 
         Cart existingCart = new Cart();
-        existingCart.setCreatedBy(user.getEmail());
-        existingCart.setProduct(product);
-        existingCart.setQuantity(3L);
+        existingCart.setInventory(inventory);
+        existingCart.setCreatedBy(JwtAuthenticationFilter.CURRENT_USER);
+        existingCart.setQuantity(10L);
 
         when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
-        when(productRepository.findById(id)).thenReturn(Optional.of(product));
-        when(cartRepository.findByProduct_ProductIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
+        when(inventoryRepository.findById(id)).thenReturn(Optional.of(inventory));
+        when(cartRepository.findByInventory_InventoryIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
 
         cartService.decreaseQuantity(id);
 
         verify(cartRepository, times(1)).save(any(Cart.class));
 
-        Assertions.assertThat(existingCart.getQuantity()).isLessThan(product.getInventory().getQuantity());
+        Assertions.assertThat(existingCart.getQuantity()).isLessThan(inventory.getQuantity());
         Assertions.assertThat(existingCart.getCreatedBy()).isEqualTo(user.getEmail());
-        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(2L);
-        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(200);
+        Assertions.assertThat(existingCart.getQuantity()).isEqualTo(9L);
+        Assertions.assertThat(existingCart.getTotalAmount()).isEqualTo(900);
 
     }
 
@@ -209,17 +202,17 @@ class CartServiceImplTest {
         User user = new User();
         user.setEmail(JwtAuthenticationFilter.CURRENT_USER);
 
-        Product product = new Product();
-        product.setProductId(1L);
+        Inventory inventory = new Inventory();
+        inventory.setInventoryId(1L);
 
         Cart existingCart = new Cart();
+        existingCart.setInventory(inventory);
         existingCart.setCreatedBy(user.getEmail());
-        existingCart.setProduct(product);
         existingCart.setFilter(false);
 
         when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
-        when(productRepository.findById(id)).thenReturn(Optional.of(product));
-        when(cartRepository.findByProduct_ProductIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
+        when(inventoryRepository.findById(id)).thenReturn(Optional.of(inventory));
+        when(cartRepository.findByInventory_InventoryIdAndUserEmail(id, user.getEmail())).thenReturn(Optional.of(existingCart));
 
         cartService.filterCart(id);
 
@@ -227,15 +220,25 @@ class CartServiceImplTest {
     }
 
     @Test
-    public void deleteProductsInCart(){
+    public void deleteOneProductInCart(){
 
         Long id = 1L;
         String username = JwtAuthenticationFilter.CURRENT_USER;
-        cartService.deleteProductsInCart(id);
+        cartService.deleteOneProductInCart(id);
 
-        verify(cartRepository, times(1)).deleteByProduct_ProductIdAndUserEmail(id,username);
+        verify(cartRepository, times(1)).deleteByInventory_InventoryIdAndUserEmail(id,username);
 
     }
 
- */
+    @Test
+    public void deleteAllCustomersProductInCart(){
+
+        String username = JwtAuthenticationFilter.CURRENT_USER;
+        cartService.deleteAllProductsInCart();
+
+        verify(cartRepository, times(1)).deleteAllByUserEmail(username);
+
+    }
+
+
 }
