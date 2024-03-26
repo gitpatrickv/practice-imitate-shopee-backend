@@ -118,4 +118,5 @@ public class OrderServiceImpl implements OrderService {
         Optional<Inventory> inventory = inventoryRepository.findById(order.getInventoryId());
         inventory.get().setQuantity(inventory.get().getQuantity() + order.getQuantity());
     }
+
 }
