@@ -19,5 +19,8 @@ public class PracticeImitateShopeeBackendApplication {
 
 	//todo flyway practice
 
-	//todo users can generate their own sku code
+	//todo sales history
+	//todo separate customers and vendors? make a person entity and use inheritance??
+	//todo vendors can generate their own sku code for their product
+
 }
