@@ -6,8 +6,6 @@ import com.springboot.practiceimitateshopeebackend.model.PriceRequest;
 import com.springboot.practiceimitateshopeebackend.model.QuantityRequest;
 import com.springboot.practiceimitateshopeebackend.repository.CartRepository;
 import com.springboot.practiceimitateshopeebackend.repository.InventoryRepository;
-import com.springboot.practiceimitateshopeebackend.repository.ProductRepository;
-import com.springboot.practiceimitateshopeebackend.repository.ProductVariationRepository;
 import com.springboot.practiceimitateshopeebackend.service.InventoryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
