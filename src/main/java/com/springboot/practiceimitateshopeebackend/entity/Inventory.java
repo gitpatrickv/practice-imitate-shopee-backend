@@ -23,6 +23,8 @@ public class Inventory extends AuditEntity{
     private String shopName;
     private Double price;
     private String skuCode;
+    private String color;
+    private String size;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

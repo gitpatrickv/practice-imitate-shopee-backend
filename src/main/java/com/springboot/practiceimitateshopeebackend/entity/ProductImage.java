@@ -17,9 +17,7 @@ public class ProductImage {
     @SequenceGenerator(name = "image_gen", sequenceName = "image_seq", allocationSize = 1)
     private Long imageId;
 
-    @Lob
-    @Column(length = 10000)
-    private byte[] imageData;
+    private String photoUrl;
 
     @ManyToOne
     @JoinColumn(name = "inventory_id")
