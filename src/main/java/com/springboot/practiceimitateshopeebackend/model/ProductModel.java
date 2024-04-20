@@ -1,5 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -9,10 +10,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(NON_DEFAULT)
 public class ProductModel {
 
     @Valid

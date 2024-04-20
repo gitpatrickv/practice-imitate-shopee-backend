@@ -1,6 +1,6 @@
 package com.springboot.practiceimitateshopeebackend.model;
 
-import com.springboot.practiceimitateshopeebackend.entity.constants.Gender;
+
 import com.springboot.practiceimitateshopeebackend.entity.constants.Role;
 import com.springboot.practiceimitateshopeebackend.validation.ConfirmPasswordValid;
 import com.springboot.practiceimitateshopeebackend.validation.UniqueEmailValid;
@@ -35,8 +35,6 @@ public class UserModel{
     private String password;
     @NotBlank(message = "{confirm.password.required}")
     private String confirmPassword;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
     @Enumerated(EnumType.STRING)
     private Role role;
 }

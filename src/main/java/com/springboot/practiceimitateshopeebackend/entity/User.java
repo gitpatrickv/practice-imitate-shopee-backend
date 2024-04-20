@@ -1,6 +1,5 @@
 package com.springboot.practiceimitateshopeebackend.entity;
 
-import com.springboot.practiceimitateshopeebackend.entity.constants.Gender;
 import com.springboot.practiceimitateshopeebackend.entity.constants.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,8 +28,6 @@ public class User implements UserDetails {
     private String address;
     private String contactNumber;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
     @Enumerated(EnumType.STRING)
     private Role role;
 

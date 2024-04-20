@@ -1,6 +1,8 @@
 package com.springboot.practiceimitateshopeebackend.utils;
 
 public class StringUtils {
+    public static final String PHOTO_DIRECTORY = System.getProperty("user.home") + "/Downloads/uploads/";
+    public static final String X_REQUESTED_WITH = "X-Requested-With";
     public static final String ACCOUNT_EXISTS = "ACCOUNT ALREADY EXISTS!";
     public static final String DELETED = "PRODUCT DELETED!";
     public static final String INVALID_CREDENTIALS = "INVALID CREDENTIALS!";
